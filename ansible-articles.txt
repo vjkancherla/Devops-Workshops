@@ -1,0 +1,9 @@
+https://github.com/atplanet/ansible-auto-scaling-tutorial
+https://medium.com/@I_M_Harsh/build-and-deploy-using-jenkins-packer-and-terraform-40b2aafedaec
+https://medium.com/faun/building-repeatable-infrastructure-with-terraform-and-ansible-on-aws-3f082cd398ad
+https://alex.dzyoba.com/blog/terraform-ansible/
+https://medium.com/@arslan70/creating-aws-autoscaling-cluster-with-terraform-and-orchestrating-instances-with-ansible-42306f4dd785
+
+
+https://stackoverflow.com/questions/33795607/how-to-define-ssh-private-key-for-servers-fetched-by-dynamic-inventory-in-files
+https://github.com/ansible/ansible-examples

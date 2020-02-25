@@ -1,0 +1,15 @@
+---
+- hosts: tag_aws_autoscaling_groupName_vija0326_amz2_Ans_Slaves_AutoScaleGrp_3GSYBEWABFNW
+  gather_facts: False
+  remote_user: ec2-user
+  # become root (using sudo, by default)
+  become: yes
+
+  tasks:
+    - name: Install Python 2
+      raw: test -e /usr/bin/python || (yum install -y python)
+
+    - name: Setup password less SSH accessing using authorized_keys
+      authorized_key: user=root
+                      exclusive=no
+                      key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

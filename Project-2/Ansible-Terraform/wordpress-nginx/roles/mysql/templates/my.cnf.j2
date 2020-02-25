@@ -1,0 +1,11 @@
+[mysqld]
+pid-file    = /var/run/mysqld/mysqld.pid
+socket      = /var/run/mysqld/mysqld.sock
+datadir     = /var/lib/mysql
+log-error   = /var/log/mysql/error.log
+default_authentication_plugin=mysql_native_password
+character-set-server=utf8
+
+[client]
+port        = {{ mysql_port }}
+socket      = /var/run/mysqld/mysqld.sock

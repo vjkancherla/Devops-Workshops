@@ -1,0 +1,4 @@
+1. Use the Terraform code to spin up a Master node, a Web node, a DB node and an CLB
+2. login to Master node and install/configure WordPress by
+	a. cd /root/ansible/wordpress
+    c. ./run.sh
