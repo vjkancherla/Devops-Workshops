@@ -1,0 +1,5 @@
+Use Terraform + Ansible to create an EC2 instance and install Java8+Jenkins on it.
+
+1. use TF to create the resources first
+2. run ansible/run.sh to install Java8+Jenkins to the instance
+3. use the CLB’s dns name, on port 80 to access Jenkins
