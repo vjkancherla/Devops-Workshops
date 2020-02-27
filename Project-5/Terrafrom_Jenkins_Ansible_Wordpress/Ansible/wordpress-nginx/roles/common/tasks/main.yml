@@ -1,0 +1,34 @@
+---
+- name: Install libselinux-python
+  yum:
+    name:
+      - libselinux-python
+      - iptables-services
+    state: present
+
+- name: Reload ansible_facts
+  setup:
+
+- name: Add EPEL Repo
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/7/$basearch/
+
+#- name: Create the GPG key for EPEL
+#  copy: src=RPM-GPG-KEY-EPEL-7 dest=/etc/pki/rpm-gpg
+
+- name: Create the GPG key for EPEL
+  rpm_key:
+    state: present
+    key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
+
+- name: Set up Web iptables rules
+  copy: src=iptables-web dest=/etc/sysconfig/iptables
+  when: "'tag_app_tier_web' in group_names"
+  notify: restart iptables
+
+- name: Set up DB iptables rules
+  copy: src=iptables-db dest=/etc/sysconfig/iptables
+  when: "'tag_app_tier_database' in group_names"
+  notify: restart iptables
