@@ -5,7 +5,7 @@
 terraform {
   backend "s3" {
     bucket = "vija0326-mybucket"
-    key    = "000compute.tfstate"
+    key    = "project2-000compute.tfstate"
     region = "eu-west-1"
   }
 

@@ -5,7 +5,7 @@
 terraform {
   backend "s3" {
     bucket = "vija0326-mybucket"
-    key    = "project3-000compute.tfstate"
+    key    = "project4-000compute.tfstate"
     region = "eu-west-1"
   }
 
@@ -25,6 +25,18 @@ locals {
     ServiceProvider = "Rackspace"
     Terraform       = "true"
     sso             = "vija0326"
+  }
+}
+
+data "aws_iam_policy_document" "mod_ec2_assume_role_policy_doc" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
+
+    principals {
+      identifiers = ["ec2.amazonaws.com"]
+      type        = "Service"
+    }
   }
 }
 
@@ -54,22 +66,64 @@ resource "aws_iam_policy" "ansible-policy" {
 EOF
 }
 
-module "jenkins-instance" {
-  source = "git@github.com:rackspace-infrastructure-automation/aws-terraform-ec2_autorecovery//?ref=v0.0.23"
+resource "aws_iam_role" "mod_ec2_instance_role" {
 
-  additional_tags     = "${merge(local.base_tags,
-                                  map("Name", "vija0326-jenks-Amz2-Master"),
-                                  map("app_tier", "jenkins"))}"
-  key_pair            = "VijayKancherla"
-  ec2_os              = "amazon2"
-  resource_name       = "vija0326-jenks-Amz2-Master"
-  security_group_list = ["${aws_security_group.jenkins-ec2-sg.id}"]
-  subnets             = ["subnet-0655ca5e0722c13ec"]
-  instance_type       = "t3.large"
-  instance_role_managed_policy_arns = ["${aws_iam_policy.ansible-policy.arn}"]
-  instance_role_managed_policy_arn_count = 1
-
+  assume_role_policy = "${data.aws_iam_policy_document.mod_ec2_assume_role_policy_doc.json}"
+  name               = "JenkinsInstanceRole"
+  path               = "/"
 }
+
+resource "aws_iam_instance_profile" "instance_role_instance_profile" {
+
+  name = "Jenkins-Instance-Profile"
+  path = "/"
+  role = "${aws_iam_role.mod_ec2_instance_role.name}"
+}
+
+resource "aws_iam_role_policy_attachment" "attach_core_ssm_policy" {
+
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  role       = "${aws_iam_role.mod_ec2_instance_role.name}"
+}
+
+resource "aws_iam_role_policy_attachment" "attach_ansible_policy" {
+
+  policy_arn = "${aws_iam_policy.ansible-policy.arn}"
+  role       = "${aws_iam_role.mod_ec2_instance_role.name}"
+}
+
+resource "aws_instance" "jenkins-instance" {
+
+  ami                    = "ami-099a8245f5daa82bf"
+  instance_type          = "t3.large"
+  subnet_id              = "subnet-0655ca5e0722c13ec"
+  iam_instance_profile   = "${aws_iam_instance_profile.instance_role_instance_profile.name}"
+  vpc_security_group_ids = ["${aws_security_group.jenkins-ec2-sg.id}"]
+  key_name               = "VijayKancherla"
+
+
+  root_block_device {
+    volume_type           = "gp2"
+    volume_size           = "60"
+    delete_on_termination = true
+  }
+
+  tags = "${merge(local.base_tags,
+                    map("Name", "vija0326-jenks-Amz2-Master"),
+                    map("app_tier", "jenkins"))}"
+
+  provisioner "local-exec" {
+    command = <<EOT
+    sleep 120;
+	  >jenkins-ci.ini;
+	  echo "[jenkins-ci]" | tee -a jenkins-ci.ini;
+	  echo "${aws_instance.jenkins-instance.public_ip}" | tee -a jenkins-ci.ini;
+    export ANSIBLE_HOST_KEY_CHECKING=False;
+	  ansible-playbook -i jenkins-ci.ini ../../../ansible/provision-jenkins.yml
+EOT
+  }
+}
+
 
 module "clb" {
   source = "git@github.com:rackspace-infrastructure-automation/aws-terraform-clb//?ref=v0.0.7"
@@ -77,7 +131,7 @@ module "clb" {
   # Required
   clb_name        = "vija0326-jenkins-test"
   security_groups = ["${aws_security_group.jenkins-clb-sg.id}"]
-  instances       = ["${module.jenkins-instance.ar_instance_id_list}"]
+  instances       = ["${aws_instance.jenkins-instance.id}"]
   instances_count = 1
   subnets         = ["subnet-0655ca5e0722c13ec", "subnet-0207deb52e016cefa"]
 

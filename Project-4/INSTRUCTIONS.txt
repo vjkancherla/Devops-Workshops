@@ -1,0 +1,3 @@
+In this project we provision a Jenkins EC2 instance by running a "local-exec" provision in Terraform.
+
+Just run "terraform apply", and it will automatically trigger the ansible playbook to provision the Jenkins resource.
