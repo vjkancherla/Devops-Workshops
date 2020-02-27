@@ -1,3 +1,22 @@
+/**
+ * # 000compute
+ */
+
+terraform {
+  backend "s3" {
+    bucket = "vija0326-mybucket"
+    key    = "project5-wordpress.tfstate"
+    region = "eu-west-1"
+  }
+
+  required_version = "0.11.14"
+}
+
+provider "aws" {
+  version = "~> 2.20"
+  region = "eu-west-1"
+}
+
 
 locals {
   base_tags = {
