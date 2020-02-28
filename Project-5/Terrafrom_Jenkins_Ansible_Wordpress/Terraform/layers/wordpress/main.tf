@@ -3,11 +3,11 @@
  */
 
 terraform {
-  backend "s3" {
+  /*backend "s3" {
     bucket = "vija0326-mybucket"
     key    = "project5-wordpress.tfstate"
     region = "eu-west-1"
-  }
+  }*/
 
   required_version = "0.11.14"
 }
