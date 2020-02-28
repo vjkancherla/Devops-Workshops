@@ -1,0 +1,13 @@
+---
+ - name: Configure Jenkins on AMZ2
+   remote_user: ec2-user
+   become: yes
+   become_method: sudo
+
+   hosts: all
+   roles:
+    - role: lean_delivery.java
+      java_package: jre
+      java_major_version: 8
+      transport: repositories
+    - role: lean_delivery.jenkins

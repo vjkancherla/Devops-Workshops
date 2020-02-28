@@ -29,7 +29,7 @@ locals {
 }
 
 module "db-instance" {
-  source = "git@github.com:rackspace-infrastructure-automation/aws-terraform-ec2_autorecovery//?ref=v0.0.23"
+  source = "../../modules/aws-terraform-ec2_autorecovery-0.0.23/"
 
   additional_tags     = "${merge(local.base_tags,
                                   map("Name", "vija0326-Ans-Amz2-DB"),
@@ -43,7 +43,7 @@ module "db-instance" {
 }
 
 module "web-instance" {
-  source = "git@github.com:rackspace-infrastructure-automation/aws-terraform-ec2_autorecovery//?ref=v0.0.23"
+  source = "../../modules/aws-terraform-ec2_autorecovery-0.0.23/"
 
   additional_tags     = "${merge(local.base_tags,
                                   map("Name", "vija0326-Ans-Amz2-Web"),
@@ -57,7 +57,7 @@ module "web-instance" {
 }
 
 module "clb" {
-  source = "git@github.com:rackspace-infrastructure-automation/aws-terraform-clb//?ref=v0.0.7"
+  source = "../../modules/aws-terraform-clb-0.0.7/"
 
   # Required
   clb_name        = "ans-wordpress-test"

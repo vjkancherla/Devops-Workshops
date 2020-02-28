@@ -119,7 +119,7 @@ resource "aws_instance" "jenkins-instance" {
 	  echo "[jenkins-ci]" | tee -a jenkins-ci.ini;
 	  echo "${aws_instance.jenkins-instance.public_ip}" | tee -a jenkins-ci.ini;
     export ANSIBLE_HOST_KEY_CHECKING=False;
-	  ansible-playbook -i jenkins-ci.ini ../../../ansible/provision-jenkins.yml
+	  ansible-playbook -i jenkins-ci.ini ../../../Ansible/jenkins/provision-jenkins.yml
     rm jenkins-ci.ini
 EOT
   }
@@ -127,7 +127,7 @@ EOT
 
 
 module "clb" {
-  source = "git@github.com:rackspace-infrastructure-automation/aws-terraform-clb//?ref=v0.0.7"
+  source = "../../modules/aws-terraform-clb-0.0.7/"
 
   # Required
   clb_name        = "vija0326-jenkins-test"
