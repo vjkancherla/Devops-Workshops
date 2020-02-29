@@ -1,0 +1,11 @@
+---
+ - name: Configure Jenkins on AMZ2
+   remote_user: ec2-user
+   become: yes
+   become_method: sudo
+
+   hosts: all
+   roles:
+    - role: diodonfrost.terraform
+      vars:
+        - terraform_version: 0.11.14
