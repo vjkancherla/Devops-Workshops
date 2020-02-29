@@ -11,3 +11,8 @@
       java_major_version: 8
       transport: repositories
     - role: lean_delivery.jenkins
+    - role: darkwizard242.terraform
+      vars:
+        terraform_version: 0.11.14
+    - role: geerlingguy.ansible
+      
