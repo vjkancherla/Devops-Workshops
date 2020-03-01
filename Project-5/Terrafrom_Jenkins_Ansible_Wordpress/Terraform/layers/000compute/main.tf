@@ -50,7 +50,7 @@ resource "aws_iam_policy" "ansible-policy" {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "Demo201505282045",
+      "Sid": "ansibleperms",
       "Effect": "Allow",
       "Action": [
           "ec2:Describe*",
@@ -58,6 +58,18 @@ resource "aws_iam_policy" "ansible-policy" {
           "route53:ListResourceRecordSets",
           "rds:Describe*",
           "elasticache:Describe*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "terraformperms",
+      "Effect": "Allow",
+      "Action": [
+          "ec2:*",
+          "elasticloadbalancing:*",
+          "s3:*",
+          "logs:*",
+          "cloudwatch:*"
       ],
       "Resource": "*"
     }
