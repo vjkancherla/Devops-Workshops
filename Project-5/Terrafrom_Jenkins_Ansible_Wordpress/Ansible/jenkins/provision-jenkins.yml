@@ -16,3 +16,12 @@
       vars:
         - terraform_version: 0.11.14
     - role: geerlingguy.ansible
+
+   tasks:
+    - name: Installing python-boto packages
+      package:
+        name: "python-boto"
+        state: present
+
+    - name: Copy Jenkins job configs from S3
+      command: "cd /var/lib/jenkins && aws s3 cp --recursive s3://vija0326-mybucket/jenkins-config/ ."
