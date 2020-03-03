@@ -69,7 +69,9 @@ resource "aws_iam_policy" "ansible-policy" {
           "elasticloadbalancing:*",
           "s3:*",
           "logs:*",
-          "cloudwatch:*"
+          "cloudwatch:*",
+          "ssm:*",
+          "iam:*"
       ],
       "Resource": "*"
     }

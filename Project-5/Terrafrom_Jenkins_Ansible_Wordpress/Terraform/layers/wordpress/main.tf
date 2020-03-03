@@ -37,7 +37,7 @@ module "db-instance" {
   key_pair            = "VijayKancherla"
   ec2_os              = "amazon2"
   resource_name       = "vija0326-Ans-Amz2-DB"
-  security_group_list = ["sg-0b6a2859c4532d73c"]
+  security_group_list = ["${aws_security_group.wordpress-ec2-sg.id}"]
   subnets             = ["subnet-09b3316783387f292"]
   instance_type       = "t3.large"
 }
@@ -51,7 +51,7 @@ module "web-instance" {
   key_pair            = "VijayKancherla"
   ec2_os              = "amazon2"
   resource_name       = "vija0326-Ans-Amz2-Web"
-  security_group_list = ["sg-0b6a2859c4532d73c"]
+  security_group_list = ["${aws_security_group.wordpress-ec2-sg.id}"]
   subnets             = ["subnet-09b3316783387f292"]
   instance_type       = "t3.large"
 }
@@ -61,7 +61,7 @@ module "clb" {
 
   # Required
   clb_name        = "ans-wordpress-test"
-  security_groups = ["sg-0b6a2859c4532d73c"]
+  security_groups = ["${aws_security_group.wordpress-clb-sg.id}"]
   instances       = ["${module.web-instance.ar_instance_id_list}"]
   instances_count = 1
   subnets         = ["subnet-0655ca5e0722c13ec", "subnet-0207deb52e016cefa"]
@@ -90,16 +90,49 @@ module "clb" {
   ]
 }
 
-data "http" "myip" {
-  url = "http://ipv4.icanhazip.com"
+resource "aws_security_group" "wordpress-clb-sg" {
+  name        = "wordpress-clb-sg"
+  description = "Allow WP inbound traffic"
+  vpc_id      = "vpc-0c6ee31520a0b15fa"
+
+  ingress {
+    cidr_blocks = ["78.136.22.232/32", "134.213.183.100/32"]
+    from_port   = 80
+    protocol    = "tcp"
+    to_port     = 80
+  }
+
+  ingress {
+    cidr_blocks = ["78.136.22.232/32", "134.213.183.100/32"]
+    from_port   = 443
+    protocol    = "tcp"
+    to_port     = 443
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
 }
 
-resource "aws_security_group_rule" "allow_http" {
-  type            = "ingress"
-  from_port       = 80
-  to_port         = 80
-  protocol        = "tcp"
-  cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
+resource "aws_security_group" "wordpress-ec2-sg" {
+  name        = "wordpress-ec2-sg"
+  description = "Allow ec2 WP inbound traffic"
+  vpc_id      = "vpc-0c6ee31520a0b15fa"
 
-  security_group_id = "sg-0b6a2859c4532d73c"
+  ingress {
+    security_groups = ["${aws_security_group.wordpress-clb-sg.id}"]
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
 }
