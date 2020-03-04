@@ -24,4 +24,4 @@
         state: present
 
     - name: Copy Jenkins job configs from S3
-      command: "cd /var/lib/jenkins && aws s3 cp --recursive s3://vija0326-mybucket/jenkins-config/ ."
+      command: "cd /var/lib/jenkins/jobs && aws s3 cp --recursive s3://vija0326-mybucket/jenkins-config/ ."
