@@ -34,6 +34,6 @@ def provisionWordPress() {
   dir ('Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Ansible/wordpress-nginx' ) {
     sh "chmod 500 ssh_keys/*"
     sh "chmod +x ec2.py run.sh"
-    sh "./run.sh /var/lib/jenkins/workspace/"
+    sh "./run.sh /var/lib/jenkins/workspace/WP-pipeline"
 	}
 }
