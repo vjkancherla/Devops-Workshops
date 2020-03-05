@@ -134,7 +134,7 @@ resource "aws_security_group" "wordpress-ec2-sg" {
   }
 
   ingress {
-    cidr_blocks = ["${data.aws_security_group.jenkins-ec2-sec-group.id}"]
+    security_groups = ["${data.aws_security_group.jenkins-ec2-sec-group.id}"]
     from_port   = 22
     protocol    = "tcp"
     to_port     = 22
