@@ -1,0 +1,49 @@
+---
+ - name: Configure Jenkins on AMZ2
+   remote_user: ec2-user
+   become: yes
+   become_method: sudo
+
+   hosts: all
+   roles:
+    - role: lean_delivery.java
+      vars:
+        - java_package: jre
+        - java_major_version: 8
+        - transport: repositories
+
+    - role: lean_delivery.jenkins
+      vars:
+        - jenkins2_https_enabled: false
+        - jenkins2_smtp_enabled: false
+        - jenkins2_plugins_suggested:
+            - blueocean
+            - configuration-as-code
+            - build-timeout
+            - credentials-binding
+            - file-operations
+            - git
+            - pipeline-stage-view
+            - pipeline-utility-steps
+            - timestamper
+            - workflow-aggregator
+            - ws-cleanup
+            - job-dsl
+            - checkstyle
+            - log-parser
+            - warnings-ng
+            - permissive-script-security
+        - jenkins2_credentials_enabled: false
+        - jenkins2_security_enable: false
+
+    - role: diodonfrost.terraform
+      vars:
+        - terraform_version: 0.11.14
+
+    - role: geerlingguy.ansible
+
+   tasks:
+    - name: Installing python-boto packages
+      package:
+        name: "python-boto"
+        state: present

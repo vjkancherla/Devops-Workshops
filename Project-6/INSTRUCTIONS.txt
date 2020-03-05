@@ -1,0 +1,13 @@
+1. create + provision the Jenkins instance, locally, using TF from
+Project-5/Terrafrom_Jenkins_Ansible_Wordpress/Terraform/layers/000compute
+
+2. login to jenkins are 3 jobs:
+
+==>1. create_wp_infra: checkout and run
+Project-5/Terrafrom_Jenkins_Ansible_Wordpress/Terraform/layers/000compute/create-infra.sh
+
+==>2. provision_wp_env: checkout and run
+Project-5/Terrafrom_Jenkins_Ansible_Wordpress/Ansible/wordpress-nginx/run.sh [path-to-jenkins_project_workspace]
+
+==>3. destroy_wp_infra: checout and run
+Project-5/Terrafrom_Jenkins_Ansible_Wordpress/Terraform/layers/000compute/destroy-infra.sh
