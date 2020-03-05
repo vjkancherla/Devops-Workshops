@@ -118,9 +118,7 @@ resource "aws_security_group" "wordpress-clb-sg" {
 }
 
 data "aws_security_group" "jenkins-ec2-sec-group" {
-  tags = {
-    Name = "jenkins-ec2-sg"
-  }
+  name = "jenkins-ec2-sg"
 }
 
 resource "aws_security_group" "wordpress-ec2-sg" {
@@ -136,7 +134,7 @@ resource "aws_security_group" "wordpress-ec2-sg" {
   }
 
   ingress {
-    cidr_blocks = ["${aws_security_group.jenkins-ec2-sec-group.id}"]
+    cidr_blocks = ["${data.aws_security_group.jenkins-ec2-sec-group.id}"]
     from_port   = 22
     protocol    = "tcp"
     to_port     = 22
