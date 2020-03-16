@@ -133,7 +133,6 @@ resource "aws_instance" "jenkins-instance" {
 	  echo "[jenkins-ci]" | tee -a jenkins-ci.ini;
 	  echo "${aws_instance.jenkins-instance.public_ip}" | tee -a jenkins-ci.ini;
     export ANSIBLE_HOST_KEY_CHECKING=False;
-    pwd
 	  ansible-playbook -i jenkins-ci.ini ../../../Ansible/jenkins/provision-jenkins.yml
     rm jenkins-ci.ini
 EOT

@@ -1,13 +1,11 @@
 1. create + provision the Jenkins instance, locally, using TF from
-Project-5/Terrafrom_Jenkins_Ansible_Wordpress/Terraform/layers/000compute
+Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Terraform/layers/jenkins
 
-2. login to jenkins are 3 jobs:
+2. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
+Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
 
-==>1. create_wp_infra: checkout and run
-Project-5/Terrafrom_Jenkins_Ansible_Wordpress/Terraform/layers/000compute/create-infra.sh
-
-==>2. provision_wp_env: checkout and run
-Project-5/Terrafrom_Jenkins_Ansible_Wordpress/Ansible/wordpress-nginx/run.sh [path-to-jenkins_project_workspace]
-
-==>3. destroy_wp_infra: checout and run
-Project-5/Terrafrom_Jenkins_Ansible_Wordpress/Terraform/layers/000compute/destroy-infra.sh
+use sparse checkouts
+>> Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Terraform/layers/wordpress
+>> Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Terraform/modules
+>> Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Ansible/wordpress-nginx
+>> Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Jenkins-Pipeline
