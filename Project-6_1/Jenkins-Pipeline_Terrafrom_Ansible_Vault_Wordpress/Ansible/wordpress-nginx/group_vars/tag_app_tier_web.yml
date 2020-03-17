@@ -1,0 +1,22 @@
+---
+# Which version of WordPress to deploy
+wp_version: 4.2.4
+wp_sha256sum: 42ca594afc709cbef8528a6096f5a1efe96dcf3164e7ce321e87d57ae015cc82
+
+# This is used for the nginx server configuration, but access to the
+# WordPress site is not restricted by a named host.
+server_hostname: www.example.com
+
+# Disable All Updates
+# By default automatic updates are enabled, set this value to true to disable all automatic updates
+auto_up_disable: false
+
+#Define Core Update Level
+#true  = Development, minor, and major updates are all enabled
+#false = Development, minor, and major updates are all disabled
+#minor = Minor updates are enabled, development, and major updates are disabled
+core_update_level: true
+
+# the var "jenkins-project-workspace" is passed in during run-time
+# eg: ansible-playbook release.yml --extra-vars "jenkins_project_workspac=/var/lib/jenkins/workspace/WP-pipeline"
+ansible_ssh_private_key_file: "{{ jenkins_project_workspace }}/Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Ansible/wordpress-nginx/ssh_keys/ec2-user-privatekey.pem"

@@ -1,0 +1,2 @@
+https://read.acloud.guru/deploy-a-jenkins-cluster-on-aws-35dcf66a1eca 
+build a fully automated CI/CD platform on AWS using Terraform, Packer & Ansible. Includes Jenkins Master-Slave cluster

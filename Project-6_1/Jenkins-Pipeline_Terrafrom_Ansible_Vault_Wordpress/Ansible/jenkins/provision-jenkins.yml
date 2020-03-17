@@ -1,0 +1,35 @@
+---
+ - name: Configure Jenkins on AMZ2
+   remote_user: ec2-user
+   become: yes
+   become_method: sudo
+
+   hosts: all
+   roles:
+    - role: lean_delivery.java
+      vars:
+        - java_package: jre
+        - java_major_version: 8
+        - transport: repositories
+
+    - role: lean_delivery.jenkins
+
+    - role: diodonfrost.terraform
+      vars:
+        - terraform_version: 0.11.14
+
+    - role: geerlingguy.ansible
+
+   tasks:
+    - name: Install Python-Boto packages
+      package:
+        name: "python-boto"
+        state: present
+
+    - name: Copy Ansible Vault Pwd file
+      copy:
+        src: /Users/vija0326/Downloads/vault-pwd.txt
+        dest: /root/vault-pwd.txt
+        owner: root
+        group: root
+        mode: '0400'
