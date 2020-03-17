@@ -11,13 +11,13 @@ The following command is used to invoke ansible playbook, in main.tf
 
 
 2. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
-Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
+Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
 
 use sparse checkouts
->> Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Terraform/layers/wordpress
->> Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Terraform/modules
->> Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Ansible/wordpress-nginx
->> Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Jenkins-Pipeline
+>> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/layers/wordpress
+>> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/modules
+>> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Ansible/wordpress-nginx
+>> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Jenkins-Pipeline
 
 The shell script which triggers Ansible to Provision WP also refers to the vault's PWD file
 Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Ansible/wordpress-nginx/run.sh

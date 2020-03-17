@@ -32,14 +32,14 @@ pipeline {
 
 // steps
 def buildInfra() {
-	dir ('Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Terraform/layers/wordpress' ) {
+	dir ('Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/layers/wordpress' ) {
     sh "chmod +x create-infra.sh"
     sh "./create-infra.sh"
 	}
 }
 
 def provisionWordPress() {
-  dir ('Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Ansible/wordpress-nginx' ) {
+  dir ('Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Ansible/wordpress-nginx' ) {
     sh "chmod 500 ssh_keys/*"
     sh "chmod +x ec2.py run.sh"
     sh "./run.sh /var/lib/jenkins/workspace/WP-pipeline"
@@ -53,7 +53,7 @@ def approveTeardown() {
 }
 
 def tearDownInfra() {
-  dir ('Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Terraform/layers/wordpress' ) {
+  dir ('Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/layers/wordpress' ) {
     sh "chmod +x destroy-infra.sh"
     sh "./destroy-infra.sh"
 	}
