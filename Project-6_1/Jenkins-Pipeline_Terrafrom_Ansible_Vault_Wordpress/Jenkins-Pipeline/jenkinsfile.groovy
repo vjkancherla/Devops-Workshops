@@ -8,12 +8,10 @@ pipeline {
         timestamps()
     }
 
-    parameters(
-      [
+    parameters {
         string(name: 'Project_number', defaultValue: 'Project-6_1' ),
         string(name: 'Project_name', defaultValue: 'Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress' )
-      ]
-   )
+   }
 
    environment {
         workspace_path = "${params.Project_number}/${params.Project_name}"
