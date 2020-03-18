@@ -14,7 +14,7 @@ pipeline {
    }
 
    environment {
-        workspace_path = "${params.Project_number}/${params.Project_name}"
+        PROJECT_PATH = "${params.Project_number}/${params.Project_name}"
     }
 
     stages {
@@ -41,14 +41,14 @@ pipeline {
 
 // steps
 def buildInfra() {
-	dir ('${env.workspace_path}/Terraform/layers/wordpress' ) {
+	dir ('${env.PROJECT_PATH}/Terraform/layers/wordpress' ) {
     sh "chmod +x create-infra.sh"
     sh "./create-infra.sh"
 	}
 }
 
 def provisionWordPress() {
-  dir ('${env.workspace_path}/Ansible/wordpress-nginx' ) {
+  dir ('${env.PROJECT_PATH}/Ansible/wordpress-nginx' ) {
     sh "chmod +x ec2.py run.sh"
     sh "./run.sh"
 	}
@@ -61,7 +61,7 @@ def approveTeardown() {
 }
 
 def tearDownInfra() {
-  dir ('${env.workspace_path}/Terraform/layers/wordpress' ) {
+  dir ('${env.PROJECT_PATH}/Terraform/layers/wordpress' ) {
     sh "chmod +x destroy-infra.sh"
     sh "./destroy-infra.sh"
 	}
