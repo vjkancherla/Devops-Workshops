@@ -1,5 +1,3 @@
 ---
 
-# the var "jenkins-project-workspace" is passed in during run-time
-# eg: ansible-playbook release.yml --extra-vars "jenkins_project_workspac=/var/lib/jenkins/workspace/WP-pipeline"
-ansible_ssh_private_key_file: "{{ jenkins_project_workspace }}/Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Ansible/wordpress-nginx/ssh_keys/ec2-user-privatekey.pem"
+ansible_ssh_private_key_file: /root/ec2-user-privatekey.pem

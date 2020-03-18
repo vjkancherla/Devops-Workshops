@@ -18,8 +18,3 @@ use sparse checkouts
 >> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/modules
 >> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Ansible/wordpress-nginx
 >> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Jenkins-Pipeline
-
-The shell script which triggers Ansible to Provision WP also refers to the vault's PWD file
-Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Ansible/wordpress-nginx/run.sh
-
-ansible-playbook -i ./ec2.py site.yml --extra-vars jenkins_project_workspace=${jenk_proj_ws} --vault-password-file=/root/vault-pwd.txt

@@ -8,6 +8,17 @@ pipeline {
         timestamps()
     }
 
+    parameters(
+      [
+        string(name: 'Project_number', defaultValue: 'Project-6_1' ),
+        string(name: 'Project_name', defaultValue: 'Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress' )
+      ]
+   )
+
+   environment {
+        workspace_path = "${params.Project_number}/${params.Project_name}"
+    }
+
     stages {
 
         stage("Build-WordPress-Infra") {
@@ -32,17 +43,16 @@ pipeline {
 
 // steps
 def buildInfra() {
-	dir ('Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/layers/wordpress' ) {
+	dir ('${workspace_path}/Terraform/layers/wordpress' ) {
     sh "chmod +x create-infra.sh"
     sh "./create-infra.sh"
 	}
 }
 
 def provisionWordPress() {
-  dir ('Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Ansible/wordpress-nginx' ) {
-    sh "chmod 500 ssh_keys/*"
+  dir ('${workspace_path}/Ansible/wordpress-nginx' ) {
     sh "chmod +x ec2.py run.sh"
-    sh "./run.sh /var/lib/jenkins/workspace/WP-pipeline"
+    sh "./run.sh"
 	}
 }
 
@@ -53,7 +63,7 @@ def approveTeardown() {
 }
 
 def tearDownInfra() {
-  dir ('Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/layers/wordpress' ) {
+  dir ('${workspace_path}/Terraform/layers/wordpress' ) {
     sh "chmod +x destroy-infra.sh"
     sh "./destroy-infra.sh"
 	}

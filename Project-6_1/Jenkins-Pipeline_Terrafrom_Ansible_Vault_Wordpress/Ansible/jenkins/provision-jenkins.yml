@@ -26,10 +26,11 @@
         name: "python-boto"
         state: present
 
-    - name: Copy Ansible Vault Pwd file
+    - name: Copy Key file
       copy:
-        src: /Users/vija0326/Downloads/vault-pwd.txt
-        dest: /root/vault-pwd.txt
+        src: ssh_keys/ec2-user-privatekey.pem
+        dest: /root/ec2-user-privatekey.pem.txt
         owner: root
         group: root
-        mode: '0400'
+        mode: '0500'
+        decrypt: yes
