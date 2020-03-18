@@ -13,6 +13,9 @@ The following command is used to invoke ansible playbook, in main.tf
 2. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
 Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
 
+The pipeline expects two parameters to be passed in.
+You can override the default values by click "build with parameters"
+
 use sparse checkouts
 >> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/layers/wordpress
 >> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/modules
