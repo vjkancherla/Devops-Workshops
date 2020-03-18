@@ -17,4 +17,4 @@ auto_up_disable: false
 #minor = Minor updates are enabled, development, and major updates are disabled
 core_update_level: true
 
-ansible_ssh_private_key_file: /root/ec2-user-privatekey.pem
+ansible_ssh_private_key_file: /tmp/ec2-user-privatekey.pem
