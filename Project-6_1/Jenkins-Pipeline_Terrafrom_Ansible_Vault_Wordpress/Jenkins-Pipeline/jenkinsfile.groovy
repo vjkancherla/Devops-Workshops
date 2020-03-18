@@ -9,8 +9,8 @@ pipeline {
     }
 
     parameters {
-        string(name: 'Project_number', defaultValue: 'Project-6_1' ),
-        string(name: 'Project_name', defaultValue: 'Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress' )
+        string(name: 'Project_number', defaultValue: 'Project-6_1')
+        string(name: 'Project_name', defaultValue: 'Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress')
    }
 
    environment {
