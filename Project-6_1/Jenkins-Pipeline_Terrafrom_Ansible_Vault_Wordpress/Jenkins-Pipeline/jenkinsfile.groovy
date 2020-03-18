@@ -41,14 +41,14 @@ pipeline {
 
 // steps
 def buildInfra() {
-	dir ('${env.PROJECT_PATH}/Terraform/layers/wordpress' ) {
+	dir ("${env.PROJECT_PATH}/Terraform/layers/wordpress") {
     sh "chmod +x create-infra.sh"
     sh "./create-infra.sh"
 	}
 }
 
 def provisionWordPress() {
-  dir ('${env.PROJECT_PATH}/Ansible/wordpress-nginx' ) {
+  dir ("${env.PROJECT_PATH}/Ansible/wordpress-nginx") {
     sh "chmod +x ec2.py run.sh"
     sh "./run.sh"
 	}
@@ -61,7 +61,7 @@ def approveTeardown() {
 }
 
 def tearDownInfra() {
-  dir ('${env.PROJECT_PATH}/Terraform/layers/wordpress' ) {
+  dir ("${env.PROJECT_PATH}/Terraform/layers/wordpress") {
     sh "chmod +x destroy-infra.sh"
     sh "./destroy-infra.sh"
 	}
