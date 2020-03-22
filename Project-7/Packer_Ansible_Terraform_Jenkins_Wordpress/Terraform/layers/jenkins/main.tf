@@ -119,7 +119,7 @@ data "aws_ami" "jenkins-ami" {
   owners = ["self"]
 }
 
-resource "aws_instance" "jenkins-instance" {
+module "jenkins-instance" {
   source = "../../modules/aws-terraform-ec2_autorecovery-0.0.23/"
 
   image_id            = "${data.aws_ami.jenkins-ami.id}"
@@ -141,7 +141,7 @@ module "clb" {
   # Required
   clb_name        = "vija0326-jenkins-test"
   security_groups = ["${aws_security_group.jenkins-clb-sg.id}"]
-  instances       = ["${aws_instance.jenkins-instance.id}"]
+  instances       = ["${module.jenkins-instance.ar_instance_id_list}"]
   instances_count = 1
   subnets         = ["subnet-0655ca5e0722c13ec", "subnet-0207deb52e016cefa"]
 

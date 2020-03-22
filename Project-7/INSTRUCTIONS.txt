@@ -1,5 +1,16 @@
 Packer + Ansible + Terraform + Jenkins
 ---------------------------------------------------
+1. Install Packer locally
+
+2. Use packer, with Ansible provisioner, to build a Jenkins AMI. And then, create the Jenkins Infra with the AMI
+>> Packer_Ansible_Terraform_Jenkins_Wordpress/entry-point/start.sh
+
+NOTE: If you are on the Rackspace VPN or SDP solutions (assumed default), direct outbound SSH will be blocked
+and the bastions must be used. Since the Packer SSH client does not play nicely with our bastions via the
+packer native bastion_* configuration directives, a workaround must be used:
+>> In a separate terminal to the one you are using for you packer build, SSH to your local Rackspace bastion
+directly while enabling SSH agent forwarding and enabling local dynamic application-level port forwarding,
+e.g: ssh -AD 1337 bastion
 
 1. create + provision the Jenkins instance, locally, using TF from
 Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Terraform/layers/jenkins

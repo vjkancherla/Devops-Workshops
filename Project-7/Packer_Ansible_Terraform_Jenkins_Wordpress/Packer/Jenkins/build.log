@@ -1,0 +1,422 @@
+[1;32mJenkins AMI build: output will be in this color.[0m
+
+[1;32m==> Jenkins AMI build: Force Deregister flag found, skipping prevalidating AMI Name[0m
+[0;32m    Jenkins AMI build: Found Image ID: ami-04d5cc9b88f9d1d39[0m
+[1;32m==> Jenkins AMI build: Creating temporary keypair: packer_5e773202-1394-d0e0-c63f-ea4f7856f643[0m
+[1;32m==> Jenkins AMI build: Creating temporary security group for this instance: packer_5e773207-5d99-be1e-e5bb-b6a206e1f593[0m
+[1;32m==> Jenkins AMI build: Authorizing access to port 22 from [0.0.0.0/0] in the temporary security groups...[0m
+[1;32m==> Jenkins AMI build: Launching a source AWS instance...[0m
+[1;32m==> Jenkins AMI build: Adding tags to source instance[0m
+[0;32m    Jenkins AMI build: Adding tag: "Name": "Packer Builder"[0m
+[0;32m    Jenkins AMI build: Instance ID: i-0ca42cb25796705e3[0m
+[1;32m==> Jenkins AMI build: Waiting for instance (i-0ca42cb25796705e3) to become ready...[0m
+[1;32m==> Jenkins AMI build: Using ssh communicator to connect: 52.215.73.14[0m
+[1;32m==> Jenkins AMI build: Waiting for SSH to become available...[0m
+[1;32m==> Jenkins AMI build: Connected to SSH![0m
+[1;32m==> Jenkins AMI build: Provisioning with shell script: /var/folders/bj/4w7928fx3fv52v37lwbz1pxdf4lhx4/T/packer-shell754929567[0m
+[1;31m==> Jenkins AMI build:   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current[0m
+[1;31m==> Jenkins AMI build:                                  Dload  Upload   Total   Spent    Left  Speed[0m
+[1;31m==> Jenkins AMI build: 100 1764k  100 1764k    0     0  20.0M      0 --:--:-- --:--:-- --:--:-- 20.0M[0m
+[1;31m==> Jenkins AMI build: DEPRECATION: Python 2.7 reached the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 is no longer maintained. A future version of pip will drop support for Python 2.7. More details about Python 2 support in pip, can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support[0m
+[0;32m    Jenkins AMI build: Collecting pip[0m
+[0;32m    Jenkins AMI build:   Downloading pip-20.0.2-py2.py3-none-any.whl (1.4 MB)[0m
+[0;32m    Jenkins AMI build: Collecting wheel[0m
+[0;32m    Jenkins AMI build:   Downloading wheel-0.34.2-py2.py3-none-any.whl (26 kB)[0m
+[0;32m    Jenkins AMI build: Installing collected packages: pip, wheel[0m
+[1;31m==> Jenkins AMI build:   WARNING: The scripts pip, pip2 and pip2.7 are installed in '/root/.local/bin' which is not on PATH.[0m
+[1;31m==> Jenkins AMI build:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.[0m
+[1;31m==> Jenkins AMI build:   WARNING: The script wheel is installed in '/root/.local/bin' which is not on PATH.[0m
+[1;31m==> Jenkins AMI build:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.[0m
+[0;32m    Jenkins AMI build: Successfully installed pip-20.0.2 wheel-0.34.2[0m
+[1;31m==> Jenkins AMI build: DEPRECATION: Python 2.7 reached the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 is no longer maintained. A future version of pip will drop support for Python 2.7. More details about Python 2 support in pip, can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support[0m
+[0;32m    Jenkins AMI build: Collecting ansible[0m
+[0;32m    Jenkins AMI build:   Downloading ansible-2.9.6.tar.gz (14.2 MB)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: jinja2 in /usr/lib/python2.7/site-packages (from ansible) (2.7.2)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: PyYAML in /usr/lib64/python2.7/site-packages (from ansible) (3.10)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: cryptography in /usr/lib64/python2.7/site-packages (from ansible) (1.7.2)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: markupsafe in /usr/lib64/python2.7/site-packages (from jinja2->ansible) (0.11)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: idna>=2.0 in /usr/lib/python2.7/site-packages (from cryptography->ansible) (2.4)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: pyasn1>=0.1.8 in /usr/lib/python2.7/site-packages (from cryptography->ansible) (0.1.9)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: six>=1.4.1 in /usr/lib/python2.7/site-packages (from cryptography->ansible) (1.9.0)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: setuptools in /usr/lib/python2.7/site-packages (from cryptography->ansible) (38.4.0)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: enum34 in /usr/lib/python2.7/site-packages (from cryptography->ansible) (1.0.4)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: ipaddress in /usr/lib/python2.7/site-packages (from cryptography->ansible) (1.0.16)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: cffi>=1.4.1 in /usr/lib64/python2.7/site-packages (from cryptography->ansible) (1.6.0)[0m
+[0;32m    Jenkins AMI build: Requirement already satisfied: pycparser in /usr/lib/python2.7/site-packages (from cffi>=1.4.1->cryptography->ansible) (2.14)[0m
+[0;32m    Jenkins AMI build: Building wheels for collected packages: ansible[0m
+[0;32m    Jenkins AMI build:   Building wheel for ansible (setup.py): started[0m
+[0;32m    Jenkins AMI build:   Building wheel for ansible (setup.py): finished with status 'done'[0m
+[0;32m    Jenkins AMI build:   Created wheel for ansible: filename=ansible-2.9.6-py2-none-any.whl size=16164194 sha256=e66ba7e9901d00105291ea3b1855c64df05b5f46835f200f9b394ba0e1cfc9ff[0m
+[0;32m    Jenkins AMI build:   Stored in directory: /root/.cache/pip/wheels/9d/e9/fd/eaf67aa068ade140887c1ab4914eadeb2765d0dbf6a115be9d[0m
+[0;32m    Jenkins AMI build: Successfully built ansible[0m
+[0;32m    Jenkins AMI build: Installing collected packages: ansible[0m
+[0;32m    Jenkins AMI build: Successfully installed ansible-2.9.6[0m
+[1;32m==> Jenkins AMI build: Provisioning with Ansible...[0m
+[0;32m    Jenkins AMI build: Uploading Playbook directory to Ansible staging directory...[0m
+[0;32m    Jenkins AMI build: Creating directory: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602[0m
+[0;32m    Jenkins AMI build: Uploading main Playbook file...[0m
+[0;32m    Jenkins AMI build: Uploading galaxy file...[0m
+[0;32m    Jenkins AMI build: Uploading inventory file...[0m
+[0;32m    Jenkins AMI build: Executing Ansible Galaxy: cd /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602 && ansible-galaxy install -r /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/galaxy-requirements.yml -p /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles[0m
+[0;32m    Jenkins AMI build: - downloading role 'jenkins', owned by lean_delivery[0m
+[0;32m    Jenkins AMI build: - downloading role from https://github.com/lean-delivery/ansible-role-jenkins/archive/2.3.0.tar.gz[0m
+[0;32m    Jenkins AMI build: - extracting lean_delivery.jenkins to /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.jenkins[0m
+[0;32m    Jenkins AMI build: - lean_delivery.jenkins (2.3.0) was installed successfully[0m
+[0;32m    Jenkins AMI build: - downloading role 'terraform', owned by diodonfrost[0m
+[0;32m    Jenkins AMI build: - downloading role from https://github.com/diodonfrost/ansible-role-terraform/archive/1.2.0.tar.gz[0m
+[0;32m    Jenkins AMI build: - extracting diodonfrost.terraform to /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/diodonfrost.terraform[0m
+[0;32m    Jenkins AMI build: - diodonfrost.terraform (1.2.0) was installed successfully[0m
+[0;32m    Jenkins AMI build: - downloading role 'unarchive-deps', owned by andrewrothstein[0m
+[0;32m    Jenkins AMI build: - downloading role from https://github.com/andrewrothstein/ansible-unarchive-deps/archive/v1.1.2.tar.gz[0m
+[0;32m    Jenkins AMI build: - extracting andrewrothstein.unarchive-deps to /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/andrewrothstein.unarchive-deps[0m
+[0;32m    Jenkins AMI build: - andrewrothstein.unarchive-deps (v1.1.2) was installed successfully[0m
+[0;32m    Jenkins AMI build: - downloading role 'java', owned by lean_delivery[0m
+[0;32m    Jenkins AMI build: - downloading role from https://github.com/lean-delivery/ansible-role-java/archive/7.0.0.tar.gz[0m
+[0;32m    Jenkins AMI build: - extracting lean_delivery.java to /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.java[0m
+[0;32m    Jenkins AMI build: - lean_delivery.java (7.0.0) was installed successfully[0m
+[0;32m    Jenkins AMI build: - downloading role 'packer', owned by andrewrothstein[0m
+[0;32m    Jenkins AMI build: - downloading role from https://github.com/andrewrothstein/ansible-packer/archive/v2.2.2.tar.gz[0m
+[0;32m    Jenkins AMI build: - extracting andrewrothstein.packer to /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/andrewrothstein.packer[0m
+[0;32m    Jenkins AMI build: - andrewrothstein.packer (v2.2.2) was installed successfully[0m
+[0;32m    Jenkins AMI build: - dependency andrewrothstein.unarchive-deps is already installed, skipping.[0m
+[0;32m    Jenkins AMI build: Executing Ansible: cd /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602 && ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 ansible-playbook /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/provision-jenkins.yml --extra-vars "packer_build_name=Jenkins AMI build packer_builder_type=amazon-ebs packer_http_addr= -o IdentitiesOnly=yes"  -c local -i /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/packer-provisioner-ansible-local522988411[0m
+[0;32m    Jenkins AMI build:[0m
+[0;32m    Jenkins AMI build: PLAY [Configure Jenkins on AMZ2] ***********************************************[0m
+[0;32m    Jenkins AMI build:[0m
+[0;32m    Jenkins AMI build: TASK [Gathering Facts] *********************************************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[1;31m==> Jenkins AMI build: [1;35m[WARNING]: Platform linux on host 127.0.0.1 is using the discovered Python[0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Load a system variables file based on distribution or OS family] ***[0m
+[1;31m==> Jenkins AMI build: [1;35minterpreter at /usr/bin/python, but future installation of another Python[0m[0m
+[1;31m==> Jenkins AMI build: [1;35minterpreter could change this. See https://docs.ansible.com/ansible/2.9/referen[0m[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1] => (item=/tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.java/vars/RedHat.yml)[0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[1;31m==> Jenkins AMI build: [1;35mce_appendices/interpreter_discovery.html for more information.[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Set base variables based on java distribution] ******[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Fetch oracle artifact with repositories transport] ***[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.java/tasks/Linux/fetch/repositories.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Install openjdk from repositories] ******************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1] => {[0m[0m
+[0;32m    Jenkins AMI build: [0;32m    "msg": "Install openjdk from repositories"[0m[0m
+[0;32m    Jenkins AMI build: [0;32m}[0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Choose platform based task] *************************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.java/tasks/Linux/system_repositories.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Perform repo install] *******************************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.java/tasks/Linux/install/RedHat.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : debug jdk_package] **********************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1] => {[0m[0m
+[0;32m    Jenkins AMI build: [0;32m    "jdk_package": "java-1.8.0-openjdk-devel.x86_64"[0m[0m
+[0;32m    Jenkins AMI build: [0;32m}[0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : debug java_artifact] ********************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1] => {[0m[0m
+[0;32m    Jenkins AMI build: [0;32m    "java_artifact": ""[0m[0m
+[0;32m    Jenkins AMI build: [0;32m}[0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Install java packages] ******************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Finalize binary paths] ******************************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.java/tasks/Linux/finalize_paths.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Find java_folder] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Set actual java directory] **************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Put java profile] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Check for java binaries existence] ******************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1] => (item=java)[0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0;32mok: [127.0.0.1] => (item=javac)[0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0;32mok: [127.0.0.1] => (item=jar)[0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0;32mok: [127.0.0.1] => (item=keytool)[0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Update alternatives] ********************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1] => (item={u'binary': u'java', u'stat': {u'charset': u'binary', u'uid': 0, u'exists': True, u'attr_flags': u'', u'woth': False, u'device_type': 0, u'mtime': 1581627234.0, u'block_size': 4096, u'inode': 26170, u'isgid': False, u'size': 8488, u'executable': True, u'roth': True, u'isuid': False, u'readable': True, u'isreg': True, u'version': u'18446744072895674960', u'pw_name': u'root', u'gid': 0, u'ischr': False, u'wusr': True, u'writeable': True, u'isdir': False, u'blocks': 24, u'xoth': True, u'rusr': True, u'nlink': 1, u'issock': False, u'rgrp': True, u'gr_name': u'root', u'path': u'/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.amzn2.0.1.x86_64/bin/java', u'xusr': True, u'atime': 1581627234.0, u'mimetype': u'application/x-executable', u'ctime': 1584870002.1054106, u'isblk': False, u'checksum': u'70139869228f6ed4a6d8eddcadf368ca78ef0544', u'dev': 51713, u'wgrp': False, u'isfifo': False, u'mode': u'0755', u'xgrp': True, u'islnk': False, u'attributes': []}, 'ansible_loop_var': u'binary', 'failed': False, u'invocation': {u'module_args': {u'follow': False, u'get_checksum': True, u'path': u'/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.amzn2.0.1.x86_64/bin/java', u'checksum_algorithm': u'sha1', u'get_md5': False, u'get_mime': True, u'get_attributes': True}}, u'changed': False})[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;32mok: [127.0.0.1] => (item={u'binary': u'javac', u'stat': {u'charset': u'binary', u'uid': 0, u'exists': True, u'attr_flags': u'', u'woth': False, u'device_type': 0, u'mtime': 1581627234.0, u'block_size': 4096, u'inode': 26172, u'isgid': False, u'size': 8616, u'executable': True, u'roth': True, u'isuid': False, u'readable': True, u'isreg': True, u'version': u'18446744072991799921', u'pw_name': u'root', u'gid': 0, u'ischr': False, u'wusr': True, u'writeable': True, u'isdir': False, u'blocks': 24, u'xoth': True, u'rusr': True, u'nlink': 1, u'issock': False, u'rgrp': True, u'gr_name': u'root', u'path': u'/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.amzn2.0.1.x86_64/bin/javac', u'xusr': True, u'atime': 1581627234.0, u'mimetype': u'application/x-executable', u'ctime': 1584870002.1054106, u'isblk': False, u'checksum': u'94c267359fad525a6540982561437bd72ef72ec5', u'dev': 51713, u'wgrp': False, u'isfifo': False, u'mode': u'0755', u'xgrp': True, u'islnk': False, u'attributes': []}, 'ansible_loop_var': u'binary', 'failed': False, u'invocation': {u'module_args': {u'follow': False, u'get_checksum': True, u'path': u'/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.amzn2.0.1.x86_64/bin/javac', u'checksum_algorithm': u'sha1', u'get_md5': False, u'get_mime': True, u'get_attributes': True}}, u'changed': False})[0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0;33mchanged: [127.0.0.1] => (item={u'binary': u'jar', u'stat': {u'charset': u'binary', u'uid': 0, u'exists': True, u'attr_flags': u'', u'woth': False, u'device_type': 0, u'mtime': 1581627234.0, u'block_size': 4096, u'inode': 26168, u'isgid': False, u'size': 8616, u'executable': True, u'roth': True, u'isuid': False, u'readable': True, u'isreg': True, u'version': u'18446744073066042221', u'pw_name': u'root', u'gid': 0, u'ischr': False, u'wusr': True, u'writeable': True, u'isdir': False, u'blocks': 24, u'xoth': True, u'rusr': True, u'nlink': 1, u'issock': False, u'rgrp': True, u'gr_name': u'root', u'path': u'/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.amzn2.0.1.x86_64/bin/jar', u'xusr': True, u'atime': 1581627234.0, u'mimetype': u'application/x-executable', u'ctime': 1584870002.1014106, u'isblk': False, u'checksum': u'0f2a989871197060e6a0bd108b460a7ab448bcb0', u'dev': 51713, u'wgrp': False, u'isfifo': False, u'mode': u'0755', u'xgrp': True, u'islnk': False, u'attributes': []}, 'ansible_loop_var': u'binary', 'failed': False, u'invocation': {u'module_args': {u'follow': False, u'get_checksum': True, u'path': u'/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.amzn2.0.1.x86_64/bin/jar', u'checksum_algorithm': u'sha1', u'get_md5': False, u'get_mime': True, u'get_attributes': True}}, u'changed': False})[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item={u'binary': u'keytool', u'stat': {u'charset': u'binary', u'uid': 0, u'exists': True, u'attr_flags': u'', u'woth': False, u'device_type': 0, u'mtime': 1581627234.0, u'block_size': 4096, u'inode': 26221, u'isgid': False, u'size': 8624, u'executable': True, u'roth': True, u'isuid': False, u'readable': True, u'isreg': True, u'version': u'1694067232', u'pw_name': u'root', u'gid': 0, u'ischr': False, u'wusr': True, u'writeable': True, u'isdir': False, u'blocks': 24, u'xoth': True, u'rusr': True, u'nlink': 1, u'issock': False, u'rgrp': True, u'gr_name': u'root', u'path': u'/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.amzn2.0.1.x86_64/bin/keytool', u'xusr': True, u'atime': 1581627234.0, u'mimetype': u'application/x-executable', u'ctime': 1584870002.1094105, u'isblk': False, u'checksum': u'8cd3d4263a23d908cf9e311dae8581b84ad966d1', u'dev': 51713, u'wgrp': False, u'isfifo': False, u'mode': u'0755', u'xgrp': True, u'islnk': False, u'attributes': []}, 'ansible_loop_var': u'binary', 'failed': False, u'invocation': {u'module_args': {u'follow': False, u'get_checksum': True, u'path': u'/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.amzn2.0.1.x86_64/bin/keytool', u'checksum_algorithm': u'sha1', u'get_md5': False, u'get_mime': True, u'get_attributes': True}}, u'changed': False})[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.java : Apply security policy patch] ************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1] => (item=/tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.java/tasks/Linux/security_policy.yml) [0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Include variables] *******************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1] => (item=/tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.jenkins/vars/Amazon.yml)[0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Choose platform based task] **********************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.jenkins/tasks/system/RedHat.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Enable EPEL repository] **************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Install requirements] ****************************[0m
+[0;32m    Jenkins AMI build: [1;30mFAILED - RETRYING: Install requirements (3 retries left).[0m[0m
+[0;32m    Jenkins AMI build: [1;30m[0m[0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Upgrade pip] *************************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Install pip packages] ****************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Create group] ************************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Create user] *************************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : SSL preparation] *********************************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.jenkins/tasks/ssl/Linux.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Check if keystore exists] ************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Copy keystore file] ******************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Check if jenkins keystore exists] ****************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Create private certificate] **********************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Create CSR] **************************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Create certificates for keystore] ****************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Create keystore] *********************************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.jenkins/tasks/ssl/Linux_keystore.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Read private key] ********************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Read public key] *********************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Create keystore] *********************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Create symlink] **********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Jenkins repository install] **********************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.jenkins/tasks/repository_install/RedHat.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Jenkins Key] *************************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Jenkins Repository] ******************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Jenkins Installation] ****************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Apply Jenkins configuration file] ****************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Jenkins confuguration] ***************************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.jenkins/tasks/configure/RedHat.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: RUNNING HANDLER [lean_delivery.jenkins : Restart Jenkins] **********************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: RUNNING HANDLER [lean_delivery.jenkins : Wait for Jenkins] *********************[0m
+[0;32m    Jenkins AMI build: [1;30mFAILED - RETRYING: Wait for Jenkins (60 retries left).[0m[0m
+[0;32m    Jenkins AMI build: [1;30m[0m[1;30mFAILED - RETRYING: Wait for Jenkins (59 retries left).[0m[0m
+[0;32m    Jenkins AMI build: [1;30m[0m[0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.jenkins/tasks/install_plugins.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Proxy Configuration] *****************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Update Center Refresh] ***************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Install Jenkins plugins] *************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1] => (item=ant)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=antisamy-markup-formatter)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=blueocean)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=configuration-as-code)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=build-timeout)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=cloudbees-folder)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=credentials-binding)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=ec2)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=email-ext)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=file-operations)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=git)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=gitlab-plugin)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=gradle)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=ldap)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=mailer)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=matrix-auth)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=pipeline-stage-view)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=pipeline-utility-steps)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=ssh-agent)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=ssh-slaves)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=timestamper)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=workflow-aggregator)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=ws-cleanup)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=job-dsl)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=sonar)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=checkstyle)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=log-parser)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=pmd)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=warnings-ng)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0;33mchanged: [127.0.0.1] => (item=permissive-script-security)[0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: RUNNING HANDLER [lean_delivery.jenkins : Restart Jenkins] **********************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: RUNNING HANDLER [lean_delivery.jenkins : Wait for Jenkins] *********************[0m
+[0;32m    Jenkins AMI build: [1;30mFAILED - RETRYING: Wait for Jenkins (60 retries left).[0m[0m
+[0;32m    Jenkins AMI build: [1;30m[0m[1;30mFAILED - RETRYING: Wait for Jenkins (59 retries left).[0m[0m
+[0;32m    Jenkins AMI build: [1;30m[0m[1;30mFAILED - RETRYING: Wait for Jenkins (58 retries left).[0m[0m
+[0;32m    Jenkins AMI build: [1;30m[0m[1;30mFAILED - RETRYING: Wait for Jenkins (57 retries left).[0m[0m
+[0;32m    Jenkins AMI build: [1;30m[0m[1;30mFAILED - RETRYING: Wait for Jenkins (56 retries left).[0m[0m
+[0;32m    Jenkins AMI build: [1;30m[0m[0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.jenkins/tasks/configure_smtp.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Configure SMTP] **********************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.jenkins/tasks/set_credentials.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Set Credentials] *********************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/lean_delivery.jenkins/tasks/configure_security.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Configure Security] ******************************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : include_tasks] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Disable insecure connection] *********************[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [lean_delivery.jenkins : Apply Jenkins configuration file and check HTTPS] ***[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [diodonfrost.terraform : Include OS specific variables.] ******************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [diodonfrost.terraform : Install Terraform] *******************************[0m
+[0;32m    Jenkins AMI build: [0;36mincluded: /tmp/packer-provisioner-ansible-local/5e773202-1469-f7c6-4440-94c0cabf5602/roles/diodonfrost.terraform/tasks/setup-Linux.yml for 127.0.0.1[0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [diodonfrost.terraform : Linux | Find all versions of Terraform] **********[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [diodonfrost.terraform : Linux | Finds the latest Terraform version when latest var is define] ***[0m
+[0;32m    Jenkins AMI build: [0;36mskipping: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;36m[0m[0m
+[0;32m    Jenkins AMI build: TASK [diodonfrost.terraform : Linux | Use the specified Terraform version when latest var is not define] ***[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [diodonfrost.terraform : Linux | Check if Terraform is present with the right version] ***[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [diodonfrost.terraform : Linux | Install Terraform] ***********************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [andrewrothstein.unarchive-deps : resolve platform specific vars] *********[0m
+[0;32m    Jenkins AMI build:[0m
+[0;32m    Jenkins AMI build: TASK [andrewrothstein.unarchive-deps : install common pkgs...] *****************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [andrewrothstein.packer : check for packer installation...] ***************[0m
+[0;32m    Jenkins AMI build: [0;32mok: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;32m[0m[0m
+[0;32m    Jenkins AMI build: TASK [andrewrothstein.packer : downloading packer...] **************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [andrewrothstein.packer : create target packer dir...] ********************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [andrewrothstein.packer : unarchive...] ***********************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [andrewrothstein.packer : cleanup...] *************************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [andrewrothstein.packer : linking install directory...] *******************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [andrewrothstein.packer : linking packer executable...] *******************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: TASK [Install Python-Boto packages] ********************************************[0m
+[0;32m    Jenkins AMI build: [0;33mchanged: [127.0.0.1][0m[0m
+[0;32m    Jenkins AMI build: [0;33m[0m[0m
+[0;32m    Jenkins AMI build: PLAY RECAP *********************************************************************[0m
+[0;32m    Jenkins AMI build: [0;33m127.0.0.1[0m                  : [0;32mok=68  [0m [0;33mchanged=27  [0m unreachable=0    failed=0    [0;36mskipped=19  [0m rescued=0    ignored=0[0m
+[0;32m    Jenkins AMI build:[0m
+[1;31m==> Jenkins AMI build: [1;35m[0m[0m
+[1;32m==> Jenkins AMI build: Stopping the source instance...[0m
+[0;32m    Jenkins AMI build: Stopping instance[0m
+[1;32m==> Jenkins AMI build: Waiting for the instance to stop...[0m
+[1;32m==> Jenkins AMI build: Creating AMI packer-jenkins-master-2020-03-22T09-38-10Z from instance i-0ca42cb25796705e3[0m
+[0;32m    Jenkins AMI build: AMI: ami-01146e74a27eebad5[0m
+[1;32m==> Jenkins AMI build: Waiting for AMI to become ready...[0m
+[1;32m==> Jenkins AMI build: Modifying attributes on AMI (ami-01146e74a27eebad5)...[0m
+[0;32m    Jenkins AMI build: Modifying: description[0m
+[1;32m==> Jenkins AMI build: Modifying attributes on snapshot (snap-073157aef8d8b39ec)...[0m
+[1;32m==> Jenkins AMI build: Terminating the source AWS instance...[0m
+[1;32m==> Jenkins AMI build: Cleaning up any extra volumes...[0m
+[1;32m==> Jenkins AMI build: No volumes to clean up, skipping[0m
+[1;32m==> Jenkins AMI build: Deleting temporary security group...[0m
+[1;32m==> Jenkins AMI build: Deleting temporary keypair...[0m
+[1;32mBuild 'Jenkins AMI build' finished.[0m
+
+==> Builds finished. The artifacts of successful builds are:
+--> Jenkins AMI build: AMIs were created:
+eu-west-1: ami-01146e74a27eebad5
+
