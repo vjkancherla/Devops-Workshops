@@ -26,7 +26,7 @@
             "ssh_username": "ec2-user",
             "type": "amazon-ebs",
             "subnet_id": "{{user `subnet_id`}}",
-            "vpc_id": "{{user `vpc_id`}}",
+            "vpc_id": "{{user `vpc_id`}}"
         }
     ],
     "provisioners": [
