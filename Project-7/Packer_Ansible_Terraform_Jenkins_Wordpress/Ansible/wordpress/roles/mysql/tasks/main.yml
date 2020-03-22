@@ -1,0 +1,55 @@
+---
+- name: Setup Mysql Repo
+  yum:
+    name: https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+    state: present
+
+- name: Install Mysql package
+  yum: name={{ item }} state=present
+  with_items:
+   - mysql-server
+   - MySQL-python
+   - libselinux-python
+   - libsemanage-python
+
+- name: Configure SELinux to start mysql on any port
+  seboolean: name=mysql_connect_any state=true persistent=yes
+  when: ansible_selinux.status == "enabled"
+
+- name: Create Mysql configuration file
+  template: src=my.cnf.j2 dest={{ mysql_config_file }}
+  notify:
+  - restart mysql
+
+- name: Create Mysql logs directory
+  file:
+    path: /var/log/mysql
+    state: directory
+    owner: mysql
+    group: mysql
+    mode: 0775
+    recurse: yes
+
+- name: Start Mysql Service
+  service: name=mysqld state=started enabled=yes
+
+- name: get root password
+  shell: "grep 'A temporary password is generated for root@localhost' /var/log/mysql/error.log | awk -F ' ' '{print $(NF)}'"
+  register: root_password
+
+- block:
+    - name: update expired root user password
+      command: mysql --user root --password={{ root_password.stdout }} --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql_root_password }}';"
+
+    - name: Remove the old root password from the log
+      lineinfile:
+        path: /var/log/mysql/error.log
+        state: absent
+        regexp: 'temporary password'
+  when: root_password.stdout != ''
+
+- name: Create WordPress database user
+  mysql_user: config_file={{ mysql_config_file }} login_user=root login_password={{ mysql_root_password }} name={{ wp_db_user }} password={{ wp_db_password }} priv={{ wp_db_name }}.*:ALL host=% state=present
+
+- name: Create WordPress database
+  mysql_db: config_file={{ mysql_config_file }} login_user=root login_password={{ mysql_root_password }} name={{ wp_db_name }} state=present

@@ -1,0 +1,24 @@
+Packer + Ansible (+ vault) + Terraform + Jenkins
+---------------------------------------------------
+
+1. create + provision the Jenkins instance, locally, using TF from
+Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Terraform/layers/jenkins
+
+The following command is used to invoke ansible playbook, in main.tf
+>>  ansible-playbook -i jenkins-ci.ini \
+../../../Ansible/jenkins/provision-jenkins.yml \
+--vault-password-file=/Users/vija0326/Downloads/vault-pwd.txt
+
+
+
+2. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
+Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
+
+The pipeline expects two parameters to be passed in.
+You can override the default values by click "build with parameters"
+
+use sparse checkouts
+>> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/layers/wordpress
+>> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/modules
+>> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Ansible/wordpress-nginx
+>> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Jenkins-Pipeline

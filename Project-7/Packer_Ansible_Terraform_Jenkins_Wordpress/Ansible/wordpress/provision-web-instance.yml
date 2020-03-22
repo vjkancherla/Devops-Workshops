@@ -1,0 +1,14 @@
+---
+
+- name: Install WordPress, Nginx, and PHP-FPM
+  remote_user: ec2-user
+  become: yes
+  become_method: sudo
+
+  hosts: localhost
+  connection: local
+  roles:
+    - common
+    - nginx
+    - php-fpm
+    - wordpress
