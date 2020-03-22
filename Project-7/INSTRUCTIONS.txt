@@ -1,4 +1,4 @@
-Packer + Ansible (+ vault) + Terraform + Jenkins
+Packer + Ansible + Terraform + Jenkins
 ---------------------------------------------------
 
 1. create + provision the Jenkins instance, locally, using TF from
