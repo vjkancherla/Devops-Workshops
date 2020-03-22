@@ -40,7 +40,7 @@
       },
       {
         "type": "ansible-local",
-        "playbook_file": "../../../Ansible/wordpress/provision-mysql-instance.yml",
+        "playbook_file": "../../../Ansible/wordpress/provision-db-instance.yml",
         "playbook_dir": "../../../Ansible/wordpress/",
         "role_paths": [
           "../../../Ansible/wordpress/roles/common",
