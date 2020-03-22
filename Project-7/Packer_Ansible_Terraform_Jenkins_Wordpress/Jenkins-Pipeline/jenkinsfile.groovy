@@ -46,13 +46,15 @@ pipeline {
 // steps
 def buildMysqlAMI() {
 	dir ("${env.PROJECT_PATH}/Packer/Wordpress/Db") {
-    sh "packer build mysql-ami-builder.json"
+    sh "chmod +x build.sh"
+    sh "./build.sh"
 	}
 }
 
 def buildWebAMI() {
 	dir ("${env.PROJECT_PATH}/Packer/Wordpress/Web") {
-    sh "packer build web-ami-builder.json"
+    sh "chmod +x build.sh"
+    sh "./build.sh"
 	}
 }
 
