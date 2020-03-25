@@ -41,6 +41,13 @@ data "aws_ami" "db-ami" {
   owners = ["self"]
 }
 
+data "aws_vpc" "selected_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = ["ECS-EC2-Example-VPC"]
+  }
+}
+
 data "aws_ami" "web-ami" {
   filter {
     name   = "state"
@@ -57,7 +64,7 @@ data "aws_ami" "web-ami" {
 module "db-instance" {
   source = "../../modules/aws-terraform-ec2_autorecovery-0.0.23/"
 
-  image_id            = "${data.aws_ami.mysql-ami.id}"
+  image_id            = "${data.aws_ami.db-ami.id}"
   additional_tags     = "${merge(local.base_tags,
                                   map("Name", "vija0326-Ans-Amz2-DB"),
                                   map("app_tier", "database"))}"
@@ -184,4 +191,21 @@ resource "aws_security_group_rule" "allow_all" {
   source_security_group_id = "${aws_security_group.wordpress-ec2-sg.id}"
   security_group_id = "${aws_security_group.wordpress-ec2-sg.id}"
   description = "allow all traffic within the SG"
+}
+
+resource "aws_route53_zone" "internal_zone" {
+ name   = "wordpress.local"
+ comment = "Hosted zone for WordPress"
+
+ vpc {
+    vpc_id = "${data.aws_vpc.selected_vpc.id}"
+  }
+}
+
+resource "aws_route53_record" "wordpress_mysql" {
+  zone_id = "${aws_route53_zone.internal_zone.zone_id}"
+  name    = "mysql.wordpress.local"
+  type    = "A"
+  ttl     = "300"
+  records = ["${module.db-instance.ar_instance_ip_list}"]
 }

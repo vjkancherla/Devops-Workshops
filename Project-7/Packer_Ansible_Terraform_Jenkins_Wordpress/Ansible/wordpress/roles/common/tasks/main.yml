@@ -14,6 +14,7 @@
     name: epel
     description: EPEL YUM repo
     baseurl: https://download.fedoraproject.org/pub/epel/7/$basearch/
+    http_caching: packages
 
 #- name: Create the GPG key for EPEL
 #  copy: src=RPM-GPG-KEY-EPEL-7 dest=/etc/pki/rpm-gpg
@@ -25,10 +26,10 @@
 
 - name: Set up Web iptables rules
   copy: src=iptables-web dest=/etc/sysconfig/iptables
-  when: "'tag_app_tier_web' in group_names"
+  when: "'Install WordPress, Nginx, and PHP-FPM' in ansible_play_name"
   notify: restart iptables
 
 - name: Set up DB iptables rules
   copy: src=iptables-db dest=/etc/sysconfig/iptables
-  when: "'tag_app_tier_database' in group_names"
+  when: "'Install MySql' in ansible_play_name"
   notify: restart iptables

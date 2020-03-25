@@ -25,7 +25,7 @@ define('DB_USER', '{{ wp_db_user }}');
 define('DB_PASSWORD', '{{ wp_db_password }}');
 
 /** MySQL hostname */
-define('DB_HOST', '{{ groups.tag_app_tier_database[0] }}');
+define('DB_HOST', 'mysql.wordpress.local');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');

@@ -2,8 +2,23 @@ Packer + Ansible + Terraform + Jenkins
 ---------------------------------------------------
 1. Install Packer locally
 
-2. Use packer, with Ansible provisioner, to build a Jenkins AMI. And then, create the Jenkins Infra with the AMI
+2. Use packer, with Ansible provisioner, to build a Jenkins AMI.
+And then, create the Jenkins Infra, using Terraform, with the AMI
 >> Packer_Ansible_Terraform_Jenkins_Wordpress/entry-point/start.sh
+
+3. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
+Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
+
+The pipeline expects two parameters to be passed in.
+You can override the default values by click "build with parameters"
+
+use sparse checkouts
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Terraform/layers/wordpress
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Terraform/modules
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Ansible/wordpress
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Jenkins-Pipeline
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Packer/Wordpress
+
 
 NOTE: If you are on the Rackspace VPN or SDP solutions (assumed default), direct outbound SSH will be blocked
 and the bastions must be used. Since the Packer SSH client does not play nicely with our bastions via the
@@ -23,13 +38,14 @@ The following command is used to invoke ansible playbook, in main.tf
 
 
 2. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
-Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
+Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
 
 The pipeline expects two parameters to be passed in.
 You can override the default values by click "build with parameters"
 
 use sparse checkouts
->> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/layers/wordpress
->> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Terraform/modules
->> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Ansible/wordpress-nginx
->> Project-6_1/Jenkins-Pipeline_Terrafrom_Ansible_Vault_Wordpress/Jenkins-Pipeline
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Terraform/layers/wordpress
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Terraform/modules
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Ansible/wordpress
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Jenkins-Pipeline
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Packer/Wordpress

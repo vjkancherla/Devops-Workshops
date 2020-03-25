@@ -40,10 +40,10 @@ data "aws_iam_policy_document" "mod_ec2_assume_role_policy_doc" {
   }
 }
 
-resource "aws_iam_policy" "ansible-policy" {
-  name        = "ansible-dynamic-inventory-policy"
+resource "aws_iam_policy" "jenkins-instance-policy" {
+  name        = "jenkins-instance-policy"
   path        = "/"
-  description = "Permissions required for running ec2.py on master node"
+  description = "Permissions required for running packer, ansible and terraform"
 
   policy = <<EOF
 {
@@ -74,36 +74,28 @@ resource "aws_iam_policy" "ansible-policy" {
           "iam:*"
       ],
       "Resource": "*"
+    },
+    {
+      "Sid": "packerperms",
+      "Effect": "Allow",
+      "Action": [
+          "iam:PassRole",
+          "iam:CreateInstanceProfile",
+          "iam:DeleteInstanceProfile",
+          "iam:GetRole",
+          "iam:GetInstanceProfile",
+          "iam:DeleteRolePolicy",
+          "iam:RemoveRoleFromInstanceProfile",
+          "iam:CreateRole",
+          "iam:DeleteRole",
+          "iam:PutRolePolicy",
+          "iam:AddRoleToInstanceProfile"
+      ],
+      "Resource": "*"
     }
   ]
 }
 EOF
-}
-
-resource "aws_iam_role" "mod_ec2_instance_role" {
-
-  assume_role_policy = "${data.aws_iam_policy_document.mod_ec2_assume_role_policy_doc.json}"
-  name               = "JenkinsInstanceRole"
-  path               = "/"
-}
-
-resource "aws_iam_instance_profile" "instance_role_instance_profile" {
-
-  name = "Jenkins-Instance-Profile"
-  path = "/"
-  role = "${aws_iam_role.mod_ec2_instance_role.name}"
-}
-
-resource "aws_iam_role_policy_attachment" "attach_core_ssm_policy" {
-
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  role       = "${aws_iam_role.mod_ec2_instance_role.name}"
-}
-
-resource "aws_iam_role_policy_attachment" "attach_ansible_policy" {
-
-  policy_arn = "${aws_iam_policy.ansible-policy.arn}"
-  role       = "${aws_iam_role.mod_ec2_instance_role.name}"
 }
 
 data "aws_ami" "jenkins-ami" {
@@ -132,6 +124,8 @@ module "jenkins-instance" {
   security_group_list = ["${aws_security_group.jenkins-ec2-sg.id}"]
   subnets             = ["subnet-09b3316783387f292"]
   instance_type       = "t3.large"
+  instance_role_managed_policy_arns = ["${aws_iam_policy.jenkins-instance-policy.arn}"]
+  instance_role_managed_policy_arn_count = 1
 }
 
 
