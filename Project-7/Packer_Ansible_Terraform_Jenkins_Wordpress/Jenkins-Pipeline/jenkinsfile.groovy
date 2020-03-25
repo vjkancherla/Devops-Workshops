@@ -60,7 +60,7 @@ def buildWebAMI() {
 
 def createInfra() {
   dir ("${env.PROJECT_PATH}/Terraform/layers/wordpress") {
-    sh "chmod +x destroy-infra.sh"
+    sh "chmod +x creat-infra.sh"
     sh "./creat-infra.sh"
 	}
 }

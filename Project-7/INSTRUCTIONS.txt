@@ -6,20 +6,6 @@ Packer + Ansible + Terraform + Jenkins
 And then, create the Jenkins Infra, using Terraform, with the AMI
 >> Packer_Ansible_Terraform_Jenkins_Wordpress/entry-point/start.sh
 
-3. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
-Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
-
-The pipeline expects two parameters to be passed in.
-You can override the default values by click "build with parameters"
-
-use sparse checkouts
->> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Terraform/layers/wordpress
->> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Terraform/modules
->> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Ansible/wordpress
->> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Jenkins-Pipeline
->> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Packer/Wordpress
-
-
 NOTE: If you are on the Rackspace VPN or SDP solutions (assumed default), direct outbound SSH will be blocked
 and the bastions must be used. Since the Packer SSH client does not play nicely with our bastions via the
 packer native bastion_* configuration directives, a workaround must be used:
@@ -27,17 +13,8 @@ packer native bastion_* configuration directives, a workaround must be used:
 directly while enabling SSH agent forwarding and enabling local dynamic application-level port forwarding,
 e.g: ssh -AD 1337 bastion
 
-1. create + provision the Jenkins instance, locally, using TF from
-Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Terraform/layers/jenkins
 
-The following command is used to invoke ansible playbook, in main.tf
->>  ansible-playbook -i jenkins-ci.ini \
-../../../Ansible/jenkins/provision-jenkins.yml \
---vault-password-file=/Users/vija0326/Downloads/vault-pwd.txt
-
-
-
-2. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
+3. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
 Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
 
 The pipeline expects two parameters to be passed in.
