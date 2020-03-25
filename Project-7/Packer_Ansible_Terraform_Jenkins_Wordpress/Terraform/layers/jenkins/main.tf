@@ -71,7 +71,8 @@ resource "aws_iam_policy" "jenkins-instance-policy" {
           "logs:*",
           "cloudwatch:*",
           "ssm:*",
-          "iam:*"
+          "iam:*",
+          "route53:*"
       ],
       "Resource": "*"
     },
