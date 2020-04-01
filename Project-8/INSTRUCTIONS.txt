@@ -1,0 +1,30 @@
+Packer + Ansible + Terraform + Jenkins
+
++ Monitoring server (with Prometheus, Grafana and ElasticSearch)
+---------------------------------------------------
+1. Install Packer locally
+
+2. Use packer, with Ansible provisioner, to build a Jenkins AMI and Monitoring AMIs.
+And then, create the Jenkins Infra and Monitoring Infra, using Terraform, with the AMIs
+>> Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/entry-point/start.sh
+
+NOTE: If you are on the Rackspace VPN or SDP solutions (assumed default), direct outbound SSH will be blocked
+and the bastions must be used. Since the Packer SSH client does not play nicely with our bastions via the
+packer native bastion_* configuration directives, a workaround must be used:
+>> In a separate terminal to the one you are using for you packer build, SSH to your local Rackspace bastion
+directly while enabling SSH agent forwarding and enabling local dynamic application-level port forwarding,
+e.g: ssh -AD 1337 bastion
+
+
+3. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
+Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
+
+The pipeline expects two parameters to be passed in.
+You can override the default values by click "build with parameters"
+
+use sparse checkouts
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Terraform/layers/wordpress
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Terraform/modules
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Ansible/wordpress
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Jenkins-Pipeline
+>> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Packer/Wordpress

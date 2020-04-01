@@ -1,0 +1,6 @@
+---
+- src: lean_delivery.jenkins
+- src: diodonfrost.terraform
+- src: andrewrothstein.unarchive-deps
+- src: lean_delivery.java
+- src: andrewrothstein.packer

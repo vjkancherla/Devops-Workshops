@@ -1,0 +1,28 @@
+---
+ - name: Install Prometheus + Grafana + ElasticSearch
+   remote_user: ec2-user
+   become: yes
+   become_method: sudo
+
+   hosts: all
+
+   roles:
+     - role: lrk.prometheus
+       vars:
+          prometheus_components: [ "prometheus", "node_exporter", alertmanager]
+
+     - role: cloudalchemy.grafana
+       vars:
+          grafana_security:
+            admin_user: admin
+            admin_password: "{{ grafana_password }}"
+
+     - role: lean_delivery.java
+       vars:
+         - java_package: jre
+         - java_major_version: 8
+         - transport: repositories
+
+     - role: lean_delivery.elasticsearch
+       vars:
+         - elastic_branch: 6

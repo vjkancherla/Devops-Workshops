@@ -1,0 +1,52 @@
+{
+    "variables": {
+        "region": "eu-west-1",
+        "subnet_id": "subnet-0655ca5e0722c13ec",
+        "vpc_id": "vpc-0c6ee31520a0b15fa",
+        "instance_type": "t2.medium",
+        "ssh_proxy_host": "localhost",
+        "ssh_proxy_port": "1337"
+    },
+    "builders": [
+        {
+            "name": "Jenkins AMI build",
+            "ami_name": "packer-jenkins-master-{{isotime | clean_resource_name}}",
+            "ami_description": "Jenkins master AMI",
+            "communicator": "ssh",
+            "instance_type": "{{user `instance_type`}}",
+            "region": "{{user `region`}}",
+            "source_ami_filter": {
+              "filters": {
+                "virtualization-type": "hvm",
+                "name": "amzn2-ami-hvm-*-x86_64-gp2",
+                "root-device-type": "ebs",
+                "owner-alias": "amazon"
+              },
+              "owners": ["amazon"],
+              "most_recent": true
+            },
+            "ssh_username": "ec2-user",
+            "type": "amazon-ebs",
+            "subnet_id": "{{user `subnet_id`}}",
+            "vpc_id": "{{user `vpc_id`}}",
+            "ssh_proxy_host": "{{user `ssh_proxy_host`}}",
+            "ssh_proxy_port": "{{user `ssh_proxy_port`}}"
+        }
+    ],
+    "provisioners": [
+      {
+        "type": "shell",
+        "inline": [
+          "sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py",
+          "sudo python get-pip.py --user",
+          "sudo /root/.local/bin/pip install ansible"
+        ]
+      },
+      {
+        "type": "ansible-local",
+        "playbook_file": "../../Ansible/jenkins/provision-jenkins.yml",
+        "playbook_dir": "../../Ansible/jenkins/",
+        "galaxy_file": "../../Ansible/jenkins/galaxy-requirements.yml"
+      }
+    ]
+}
