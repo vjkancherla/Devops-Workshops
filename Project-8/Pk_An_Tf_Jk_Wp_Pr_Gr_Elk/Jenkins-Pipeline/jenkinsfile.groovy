@@ -31,7 +31,7 @@ pipeline {
           steps { createInfra() }
       }
 
-      stage("Aprrove-WordPress-Infra-Teardown") {
+      stage("Approve-WordPress-Infra-Teardown") {
           steps { approveTeardown() }
       }
 

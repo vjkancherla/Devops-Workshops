@@ -27,4 +27,4 @@ use sparse checkouts
 >> Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Terraform/modules
 >> Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Ansible/wordpress
 >> Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Jenkins-Pipeline
->> Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Packer/Wordpress
+>> Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Packer/wordpress

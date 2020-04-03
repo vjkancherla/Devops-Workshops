@@ -29,7 +29,7 @@
 
 #setup metrics exporter for MySQL
 - block:
-    - name: Create WordPress database user
+    - name: Create Prometheus exporter database user
       mysql_user:
         config_file: "{{ mysql_config_file }}"
         login_user: root
@@ -43,9 +43,9 @@
     - name: Run MySQLd-metrics-exporter docker container
       shell: |
         docker pull prom/mysqld-exporter
-        docker run -d -p 9113:9104 -d --net='host' -e DATA_SOURCE_NAME='{{ mysql_prometheus_user }}:{{ mysql_prometheus_password }}@(my-mysql-network:3306)/' prom/mysqld-exporter
+        docker run -d -p 9113:9104 -d --net='bridge' -e DATA_SOURCE_NAME='{{ mysql_prometheus_user }}:{{ mysql_prometheus_password }}@(my-mysql-network:3306)/' prom/mysqld-exporter
 
-    - name: Verify MySqdld-metrics-exporter's status
+    - name: Verify MySqld-metrics-exporter's status
       uri:
         url: "http://localhost:9113/metrics"
         status_code: 200
