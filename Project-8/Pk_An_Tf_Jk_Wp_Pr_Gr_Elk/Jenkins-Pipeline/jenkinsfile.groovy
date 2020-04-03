@@ -45,14 +45,14 @@ pipeline {
 
 // steps
 def buildMysqlAMI() {
-	dir ("${env.PROJECT_PATH}/Packer/Wordpress/db") {
+	dir ("${env.PROJECT_PATH}/Packer/wordpress/db") {
     sh "chmod +x build.sh"
     sh "./build.sh"
 	}
 }
 
 def buildWebAMI() {
-	dir ("${env.PROJECT_PATH}/Packer/Wordpress/web") {
+	dir ("${env.PROJECT_PATH}/Packer/wordpress/web") {
     sh "chmod +x build.sh"
     sh "./build.sh"
 	}
