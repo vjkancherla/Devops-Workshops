@@ -17,14 +17,14 @@ e.g: ssh -AD 1337 bastion
 
 
 3. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
-Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Jenkins-Pipeline/jenkinsfile.groovy
+Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Jenkins-Pipeline/jenkinsfile.groovy
 
 The pipeline expects two parameters to be passed in.
 You can override the default values by click "build with parameters"
 
 use sparse checkouts
->> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Terraform/layers/wordpress
->> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Terraform/modules
->> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Ansible/wordpress
->> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Jenkins-Pipeline
->> Project-7/Packer_Ansible_Terraform_Jenkins_Wordpress/Packer/Wordpress
+>> Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Terraform/layers/wordpress
+>> Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Terraform/modules
+>> Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Ansible/wordpress
+>> Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Jenkins-Pipeline
+>> Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Packer/Wordpress
