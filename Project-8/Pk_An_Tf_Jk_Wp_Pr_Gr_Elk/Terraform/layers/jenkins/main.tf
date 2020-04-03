@@ -195,6 +195,13 @@ resource "aws_security_group" "jenkins-clb-sg" {
   }
 }
 
+data "aws_vpc" "selected_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = ["ECS-EC2-Example-VPC"]
+  }
+}
+
 resource "aws_security_group" "jenkins-ec2-sg" {
   name        = "jenkins-ec2-sg"
   description = "Allow Jenkins inbound traffic"
@@ -205,6 +212,14 @@ resource "aws_security_group" "jenkins-ec2-sg" {
     from_port   = 0
     protocol    = "-1"
     to_port     = 0
+  }
+
+  ingress {
+    cidr_blocks = ["${data.aws_vpc.selected_vpc.cidr_block}"]
+    from_port   = 9113
+    protocol    = "tcp"
+    to_port     = 9113
+    description = "allow Prometheus scraping"
   }
 
   egress {

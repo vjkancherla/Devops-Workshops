@@ -9,8 +9,8 @@ pipeline {
     }
 
     parameters {
-        string(name: 'Project_number', defaultValue: 'Project-7')
-        string(name: 'Project_name', defaultValue: 'Packer_Ansible_Terraform_Jenkins_Wordpress')
+        string(name: 'Project_number', defaultValue: 'Project-8')
+        string(name: 'Project_name', defaultValue: 'Pk_An_Tf_Jk_Wp_Pr_Gr_Elk')
    }
 
    environment {
