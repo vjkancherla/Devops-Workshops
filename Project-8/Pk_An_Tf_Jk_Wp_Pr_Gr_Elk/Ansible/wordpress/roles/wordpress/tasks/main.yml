@@ -10,7 +10,7 @@
   #command: chdir=/srv/ /bin/tar xvf wordpress-{{ wp_version }}.tar.gz creates=/srv/wordpress
   unarchive:
     src: /srv/wordpress-{{ wp_version }}.tar.gz
-    dest: /srv/wordpress
+    dest: /srv
     remote_src: yes
 
 - name: Add group "wordpress"

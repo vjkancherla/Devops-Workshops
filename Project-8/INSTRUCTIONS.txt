@@ -2,9 +2,24 @@ Packer + Ansible + Terraform + Jenkins
 
 + Monitoring server (with Prometheus, Grafana and ElasticSearch)
 ---------------------------------------------------
+Jenkins + Monitoring + Web + Mysql instances have an exporter to allow prometheus to scrape logs
+Jenkins => node exporter on port 9113
+Monitoring => node exporter on port 9090
+Web => nginx exporter (in the form of a docker container) on port 9113
+MySQL => MysqlD exporter (in the form of a docker container) on port 9113
+
+Prometheus on the Monitoring instance is using AWS Service discovery to identify instances listening on port 9113
+
+On the monitoring instance:
+Prometheus is available on Port 9090
+Grafana is available on Port 3000
+
+Use the Proxy-plugin in Chrome to access the monitoring ELB whilst VPN'd in
+
+
 1. Install Packer locally
 
-2. Use packer, with Ansible provisioner, to build a Jenkins AMI and Monitoring AMIs.
+2. Use packer, with Ansible provisioner, to build a Jenkins AMI and Monitoring AMI.
 And then, create the Jenkins Infra and Monitoring Infra, using Terraform, with the AMIs
 >> Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/entry-point/start.sh
 
@@ -16,7 +31,7 @@ directly while enabling SSH agent forwarding and enabling local dynamic applicat
 e.g: ssh -AD 1337 bastion
 
 
-3. login to Jenkins create a pipeline job called "WP-pipeline" and use the below Jenkins file:
+3. login to Jenkins and create a pipeline job called "WP-pipeline" and use the below Jenkins file:
 Project-8/Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Jenkins-Pipeline/jenkinsfile.groovy
 
 The pipeline expects two parameters to be passed in.
