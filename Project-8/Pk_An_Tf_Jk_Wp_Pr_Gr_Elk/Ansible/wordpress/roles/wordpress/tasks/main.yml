@@ -7,7 +7,11 @@
            sha256sum="{{ wp_sha256sum }}"
 
 - name: Extract archive
-  command: chdir=/srv/ /bin/tar xvf wordpress-{{ wp_version }}.tar.gz creates=/srv/wordpress
+  #command: chdir=/srv/ /bin/tar xvf wordpress-{{ wp_version }}.tar.gz creates=/srv/wordpress
+  unarchive:
+    src: /srv/wordpress-{{ wp_version }}.tar.gz
+    dest: /srv/wordpress
+    remote_src: yes
 
 - name: Add group "wordpress"
   group: name=wordpress
@@ -20,7 +24,7 @@
   register: "wp_salt"
   become: no
   become_method: sudo
-  
+
 - name: Copy WordPress config file
   template: src=wp-config.php dest=/srv/wordpress/
 

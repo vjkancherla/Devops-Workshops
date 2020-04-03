@@ -44,7 +44,8 @@
         "playbook_dir": "../../../Ansible/wordpress/",
         "role_paths": [
           "../../../Ansible/wordpress/roles/common",
-          "../../../Ansible/wordpress/roles/mysql"
+          "../../../Ansible/wordpress/roles/mysql",
+          "../../../Ansible/wordpress/roles/monitoring"
         ]
       }
     ]

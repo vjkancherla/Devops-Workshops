@@ -46,7 +46,8 @@
           "../../../Ansible/wordpress/roles/common",
           "../../../Ansible/wordpress/roles/nginx",
           "../../../Ansible/wordpress/roles/php-fpm",
-          "../../../Ansible/wordpress/roles/wordpress"
+          "../../../Ansible/wordpress/roles/wordpress",
+          "../../../Ansible/wordpress/roles/monitoring"
         ]
       }
     ]

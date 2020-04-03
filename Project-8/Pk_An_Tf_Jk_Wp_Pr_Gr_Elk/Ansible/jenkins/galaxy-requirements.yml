@@ -4,3 +4,4 @@
 - src: andrewrothstein.unarchive-deps
 - src: lean_delivery.java
 - src: andrewrothstein.packer
+- src: undergreen.prometheus-node-exporter

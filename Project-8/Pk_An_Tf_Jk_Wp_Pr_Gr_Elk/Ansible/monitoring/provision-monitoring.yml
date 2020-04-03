@@ -10,19 +10,25 @@
      - role: lrk.prometheus
        vars:
           prometheus_components: [ "prometheus", "node_exporter", alertmanager]
+          prometheus_config_template: templates/prometheus.yml.j2
 
      - role: cloudalchemy.grafana
        vars:
           grafana_security:
             admin_user: admin
             admin_password: "{{ grafana_password }}"
+          grafana_datasources:
+            - name: prometheus_localhost
+              type: prometheus
+              url: 'http://localhost:9090'
+              basicAuth: false
 
      - role: lean_delivery.java
        vars:
-         - java_package: jre
-         - java_major_version: 8
-         - transport: repositories
+         java_package: jre
+         java_major_version: 8
+         transport: repositories
 
      - role: lean_delivery.elasticsearch
        vars:
-         - elastic_branch: 6
+         elastic_branch: 6

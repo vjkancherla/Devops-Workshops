@@ -5,10 +5,10 @@
   become: yes
   become_method: sudo
 
-  hosts: localhost
-  connection: local
+  hosts: all
   roles:
     - common
     - nginx
     - php-fpm
     - wordpress
+    - monitoring

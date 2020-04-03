@@ -1,0 +1,57 @@
+---
+
+- name: Install Docker
+  yum:
+    name: docker
+    state: present
+
+- name: Start Docker
+  service: name=docker state=started enabled=yes
+
+#setup metrics exporter for Nginx
+- block:
+    - name: Run Nginx-metrics-exporter docker container
+      shell: |
+        docker pull nginx/nginx-prometheus-exporter:0.6.0
+        docker run -d --net='host' -p 9113:9113 nginx/nginx-prometheus-exporter:0.6.0 -nginx.scrape-uri http://127.0.0.1:8080/basic_status
+
+    - name: Verify Nginx-metrics-exporter's status
+      uri:
+        url: "http://localhost:9113/metrics"
+        status_code: 200
+      register: metrics_page
+      until: metrics_page.status == 200
+      retries: 10
+      delay: 5
+
+  when: "'Install WordPress, Nginx, and PHP-FPM' in ansible_play_name"
+
+
+#setup metrics exporter for MySQL
+- block:
+    - name: Create WordPress database user
+      mysql_user:
+        config_file: "{{ mysql_config_file }}"
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+        name: "{{ mysql_prometheus_user }}"
+        password: "{{ mysql_prometheus_password }}"
+        priv: "*.*:PROCESS,REPLICATION CLIENT,SELECT"
+        host: localhost
+        state: present
+
+    - name: Run MySQLd-metrics-exporter docker container
+      shell: |
+        docker pull prom/mysqld-exporter
+        docker run -d -p 9113:9104 -d --net='host' -e DATA_SOURCE_NAME='{{ mysql_prometheus_user }}:{{ mysql_prometheus_password }}@(my-mysql-network:3306)/' prom/mysqld-exporter
+
+    - name: Verify MySqdld-metrics-exporter's status
+      uri:
+        url: "http://localhost:9113/metrics"
+        status_code: 200
+      register: metrics_page
+      until: metrics_page.status == 200
+      retries: 10
+      delay: 5
+
+  when: "'Install MySql' in ansible_play_name"

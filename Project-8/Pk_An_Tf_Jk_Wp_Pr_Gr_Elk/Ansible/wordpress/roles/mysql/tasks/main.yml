@@ -31,15 +31,15 @@
 - name: Start Mysql Service
   service: name=mysqld state=started enabled=yes
 
-- name: get root password
+- name: Get root password from install log
   shell: "grep 'A temporary password is generated for root@localhost' /var/log/mysql/error.log | awk -F ' ' '{print $(NF)}'"
   register: root_password
 
 - block:
-    - name: update expired root user password
+    - name: Update expired root user password
       command: mysql --user root --password={{ root_password.stdout }} --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql_root_password }}';"
 
-    - name: Remove the old root password from the log
+    - name: Remove the old root password from the install log
       lineinfile:
         path: /var/log/mysql/error.log
         state: absent

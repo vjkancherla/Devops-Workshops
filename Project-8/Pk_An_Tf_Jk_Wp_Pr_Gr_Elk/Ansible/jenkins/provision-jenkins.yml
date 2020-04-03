@@ -4,8 +4,7 @@
    become: yes
    become_method: sudo
 
-   hosts: localhost
-   connection: local
+   hosts: all
 
    roles:
     - role: lean_delivery.java
@@ -21,6 +20,29 @@
         - terraform_version: 0.11.14
 
     - role: andrewrothstein.packer
+
+    - role: undergreen.prometheus-node-exporter
+      vars:
+        - prometheus_node_exporter_version: 0.18.1
+        - prometheus_node_exporter_enabled_collectors:
+            - conntrack
+            - cpu
+            - diskstats
+            - entropy
+            - filefd
+            - filesystem
+            - loadavg
+            - mdadm
+            - meminfo
+            - netdev
+            - netstat
+            - stat
+            - textfile
+            - time
+            - vmstat
+        - prometheus_node_exporter_config_flags:
+            'web.listen-address': '0.0.0.0:9113'
+            'log.level': 'info'
 
    tasks:
     - name: Install Python-Boto packages
