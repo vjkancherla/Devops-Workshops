@@ -1,18 +1,37 @@
 Packer + Ansible + Terraform + Jenkins
 
-+ Monitoring server (with Prometheus, Grafana and ElasticSearch)
++ Monitoring server (with Prometheus + Grafana and ElasticSearch + Kibana)
 ---------------------------------------------------
-Jenkins + Monitoring + Web + Mysql instances have an exporter to allow prometheus to scrape logs
+
+The below is configured using the Linux Academy tutorials:
+1. Elastic Stack Essentials
+2. DevOps monitoring Deep Dive
+
+A Monitoring AMI is created with -
+Prometheus [port 9090]
+Grafana [port 3000]
+ElasticSearch [port 9200 and 9300]
+Kibana [port 5601]
+
+Once the monitoring AMI is deployed on EC2, it will receive/pull the following data/metrics:
+
+Prometheus data [Prometheus server will scrape data on this port]:
 Jenkins => node exporter on port 9113
-Monitoring => node exporter on port 9090
-Web => nginx exporter (in the form of a docker container) on port 9113
-MySQL => MysqlD exporter (in the form of a docker container) on port 9113
+Monitoring [localhost] => node exporter on port 9100
+Web => Nginx exporter (in the form of a docker container) on port 9113
+---Note: Nginx metrics are first enabled in nginx.conf file
+---Note: Import Grafana dashboard from https://github.com/nginxinc/nginx-prometheus-exporter/blob/master/grafana/dashboard.json
+MySQL = MysqlD exporter (in the form of a docker container) on port 9113
+---Note: MySQLD metrics are first enabled. See roles/monitoring/main.yml
 
-Prometheus on the Monitoring instance is using AWS Service discovery to identify instances listening on port 9113
+ElasticSearch data [data will be pushed to ES]:
+On all instances (Jenkins + Monitoring + Web + MySQL)
+filebeat to push [sys logs]
+metricbeat to push [sys metrics]
 
-On the monitoring instance:
-Prometheus is available on Port 9090
-Grafana is available on Port 3000
+
+Note: Prometheus on the Monitoring instance is using AWS Service discovery to identify instances listening on port 9113
+
 
 Use the Proxy-plugin in Chrome to access the monitoring ELB whilst VPN'd in
 

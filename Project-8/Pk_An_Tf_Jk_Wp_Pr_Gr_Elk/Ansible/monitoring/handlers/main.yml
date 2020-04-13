@@ -1,0 +1,21 @@
+---
+
+- name: restart elasticsearch
+  systemd:
+    name: elasticsearch
+    state: restarted
+
+- name: restart kibana
+  systemd:
+    name: kibana
+    state: restarted
+
+- name: restart filebeat
+  systemd:
+    name: filebeat
+    state: restarted
+
+- name: restart metricbeat
+  systemd:
+    name: metricbeat
+    state: restarted

@@ -1,34 +1,17 @@
 ---
- - name: Install Prometheus + Grafana + ElasticSearch
+ - name: Install Prometheus + Grafana + ElasticSearch + Kibana
    remote_user: ec2-user
    become: yes
    become_method: sudo
 
    hosts: all
 
-   roles:
-     - role: lrk.prometheus
-       vars:
-          prometheus_components: [ "prometheus", "node_exporter", alertmanager]
-          prometheus_config_template: templates/prometheus.yml.j2
 
-     - role: cloudalchemy.grafana
-       vars:
-          grafana_security:
-            admin_user: admin
-            admin_password: "{{ grafana_password }}"
-          grafana_datasources:
-            - name: prometheus_localhost
-              type: prometheus
-              url: 'http://localhost:9090'
-              basicAuth: false
 
-     - role: lean_delivery.java
-       vars:
-         java_package: jre
-         java_major_version: 8
-         transport: repositories
+   tasks:
+     - name: Perform additional configuration tasks
+       include: tasks/additional-config.yml
 
-     - role: lean_delivery.elasticsearch
-       vars:
-         elastic_branch: 6
+   handlers:
+     - name: My handlers
+       include: handlers/main.yml

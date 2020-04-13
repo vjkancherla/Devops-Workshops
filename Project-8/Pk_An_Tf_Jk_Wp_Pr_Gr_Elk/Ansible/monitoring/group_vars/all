@@ -1,2 +1,28 @@
 ---
 grafana_password: Secret123
+ansible_ssh_private_key_file: /Users/vija0326/Downloads/Devops-Workshops/Project-6/Jenkins-Pipeline_Terrafrom_Ansible_Wordpress/Ansible/jenkins/ssh_keys/ec2-user-privatekey.pem
+
+#--ElasticSearch--
+es_cluster_name: elasticsearch_playground
+es_node_name: "{{ ansible_hostname }}"
+es_path_data: "/var/lib/elasticsearch"
+es_path_logs: "/var/log/elasticsearch"
+es_host_ip: "{{ ansible_default_ipv4.address }}"
+es_http_port: 9200
+es_node_master: true
+es_node_data: true
+es_node_ingest: true
+
+#--Kibana--
+kibana_host: "{{ ansible_default_ipv4.address }}"
+kibana_port: 5601
+elasticsearch_url: "http://{{ es_host_ip }}:{{ es_http_port }}"
+
+#--Filebeat--
+os_syslog_path: "/var/log/*.log"
+elasticsearch_log_path: "/var/log/elasticsearch/{{ es_cluster_name }}.log"
+filebeat_log_path: "/var/log/filebeat/filebeat*"
+metricbeat_log_path: "/var/log/metricbeat/metricbeat*"
+kibana_log_path: "/var/log/kibana/kibana*"
+grafana_log_path: "/var/log/grafana/grafana*"
+prometheus_log_path: "/var/log/prometheus/*"

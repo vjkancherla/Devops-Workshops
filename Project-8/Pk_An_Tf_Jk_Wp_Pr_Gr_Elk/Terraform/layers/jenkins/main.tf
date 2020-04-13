@@ -28,18 +28,6 @@ locals {
   }
 }
 
-data "aws_iam_policy_document" "mod_ec2_assume_role_policy_doc" {
-  statement {
-    actions = ["sts:AssumeRole"]
-    effect  = "Allow"
-
-    principals {
-      identifiers = ["ec2.amazonaws.com"]
-      type        = "Service"
-    }
-  }
-}
-
 resource "aws_iam_policy" "jenkins-instance-policy" {
   name        = "jenkins-instance-policy"
   path        = "/"

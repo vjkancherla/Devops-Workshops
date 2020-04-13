@@ -1,0 +1,44 @@
+---
+# ---------------------------------- Cluster -----------------------------------
+#
+# Use a descriptive name for your cluster:
+#
+cluster.name: {{ es_cluster_name }}
+cluster.initial_master_nodes: {{ es_host_ip }}
+#
+# ------------------------------------ Node ------------------------------------
+#
+# Use a descriptive name for the node:
+#
+node.name: {{ es_node_name }}
+
+node.master: {{ es_node_master }}
+ 
+node.data: {{ es_node_data }}
+
+node.ingest: {{ es_node_ingest }}
+
+#
+# ----------------------------------- Paths ------------------------------------
+#
+# Path to directory where to store the data (separate multiple locations by comma):
+#
+path.data: {{ es_path_data }}
+#
+# Path to log files:
+#
+path.logs: {{ es_path_logs}}
+#
+# ---------------------------------- Network -----------------------------------
+#
+# Set the bind address to a specific IP (IPv4 or IPv6):
+#
+network.host: {{ es_host_ip }}
+#
+# Set a custom port for HTTP:
+#
+http.port: {{ es_http_port }}
+#
+# For more information, consult the network module documentation.
+#
+discovery.seed_hosts: {{ es_node_name }}
