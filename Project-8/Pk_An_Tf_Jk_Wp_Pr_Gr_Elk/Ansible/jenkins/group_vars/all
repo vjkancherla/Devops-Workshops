@@ -1,0 +1,14 @@
+---
+#--ElasticSearch--
+es_host: elasticsearch.project8.local
+es_http_port: 9200
+
+#--Kibana--
+kibana_host: kibana.project8.local
+kibana_port: 5601
+
+#--Filebeat--
+os_syslog_path: "/var/log/*.log"
+jenkins_log_path: "/var/log/jenkins/jenkins*"
+filebeat_log_path: "/var/log/filebeat/filebeat*"
+metricbeat_log_path: "/var/log/metricbeat/metricbeat*"

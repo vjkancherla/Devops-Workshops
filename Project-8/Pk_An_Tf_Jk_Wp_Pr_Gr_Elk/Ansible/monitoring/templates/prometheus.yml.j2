@@ -21,6 +21,10 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:{{ prometheus_port | default('9090') }}']
 
+  - job_name: 'Node Exporter on Prometheus/localhost'
+    static_configs:
+      - targets: ['localhost:9100']
+
   - job_name: 'All EC2 instance with Prometheus Exporter on 9113'
     ec2_sd_configs:
       - region: eu-west-1

@@ -41,21 +41,96 @@ data "aws_ami" "monitoring-ami" {
   owners = ["self"]
 }
 
-module "monitoring-instance" {
-  source = "../../modules/aws-terraform-ec2_autorecovery-0.0.23/"
+data "aws_iam_policy_document" "ec2_assume_role_policy_doc" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
 
-  image_id            = "${data.aws_ami.monitoring-ami.id}"
-  additional_tags     = "${merge(local.base_tags,
-                            map("Name", "vija0326-monitoring-Amz2"),
-                            map("app_tier", "monitoring"))}"
-  key_pair            = "VijayKancherla"
-  ec2_os              = "amazon2"
-  resource_name       = "vija0326-monitoring-Amz2"
-  security_group_list = ["${aws_security_group.monitoring-ec2-sg.id}"]
-  subnets             = ["subnet-09b3316783387f292"]
-  instance_type       = "t3.large"
-  instance_role_managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"]
-  instance_role_managed_policy_arn_count = 1
+    principals {
+      identifiers = ["ec2.amazonaws.com"]
+      type        = "Service"
+    }
+  }
+}
+
+resource "aws_iam_policy" "monitoring_instance_policy" {
+  name        = "monitoring-instance-policy"
+  path        = "/"
+  description = "Permissions required for running monitoring instance"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "monitoringperms",
+      "Effect": "Allow",
+      "Action": [
+          "ec2:Describe*",
+          "s3:*",
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role" "ec2_instance_role" {
+
+  assume_role_policy = "${data.aws_iam_policy_document.ec2_assume_role_policy_doc.json}"
+  name               = "JenkinsInstanceRole"
+  path               = "/"
+}
+
+resource "aws_iam_instance_profile" "ec2_instance_role_instance_profile" {
+
+  name = "monitoring_instance_profile"
+  path = "/"
+  role = "${aws_iam_role.ec2_instance_role.name}"
+}
+
+resource "aws_iam_role_policy_attachment" "attach_core_ssm_policy" {
+
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  role       = "${aws_iam_role.ec2_instance_role.name}"
+}
+
+resource "aws_iam_role_policy_attachment" "attach_monitoring_policy" {
+
+  policy_arn = "${aws_iam_policy.monitoring_instance_policy.arn}"
+  role       = "${aws_iam_role.mec2_instance_role.name}"
+}
+
+resource "aws_instance" "monitoring-instance" {
+
+  ami                    = "${data.aws_ami.monitoring-ami.id}"
+  instance_type          = "t3.large"
+  subnet_id              = "subnet-09b3316783387f292"
+  iam_instance_profile   = "${aws_iam_instance_profile.instance_role_instance_profile.name}"
+  vpc_security_group_ids = ["${aws_security_group.monitoring-ec2-sg.id}"]
+  key_name               = "VijayKancherla"
+
+
+  root_block_device {
+    volume_type           = "gp2"
+    volume_size           = "60"
+    delete_on_termination = true
+  }
+
+  tags = "${merge(local.base_tags,
+                    map("Name", "vija0326-monitoring-Amz2"),
+                    map("app_tier", "monitoring"))}"
+
+  provisioner "remote-exec" {
+    command = <<EOT
+    cd /tmp
+    aws s3 cp s3://vija0326-mybucket/ansible-code/monitoring.zip .
+    unzip monitoring.zip
+    cd monitoring
+    ansible-playbook additional-config.yml
+EOT
+  }
 }
 
 
@@ -65,7 +140,7 @@ module "clb" {
   # Required
   clb_name        = "vija0326-monitoring"
   security_groups = ["${aws_security_group.monitoring-clb-sg.id}"]
-  instances       = ["${module.monitoring-instance.ar_instance_id_list}"]
+  instances       = ["${aws_instance.monitoring-instance.id}"]
   instances_count = 1
   subnets         = ["subnet-0655ca5e0722c13ec", "subnet-0207deb52e016cefa"]
 
@@ -176,4 +251,55 @@ resource "aws_security_group" "monitoring-ec2-sg" {
     protocol        = "-1"
     cidr_blocks     = ["0.0.0.0/0"]
   }
+}
+
+resource "aws_route53_zone" "internal_zone" {
+ name   = "project8.local"
+ comment = "Hosted zone for Project8"
+
+ vpc {
+    vpc_id = "${data.aws_vpc.selected_vpc.id}"
+  }
+
+  tags = "${local.base_tags}"
+}
+
+resource "aws_route53_record" "monitoring" {
+  zone_id = "${aws_route53_zone.internal_zone.zone_id}"
+  name    = "monitoring.project8.local"
+  type    = "A"
+  ttl     = "300"
+  records = ["${module.monitoring-instance.ar_instance_ip_list}"]
+}
+
+resource "aws_route53_record" "elasticsearch" {
+  zone_id = "${aws_route53_zone.internal_zone.zone_id}"
+  name    = "elasticsearch.project8.local"
+  type    = "A"
+  ttl     = "300"
+  records = ["${module.monitoring-instance.ar_instance_ip_list}"]
+}
+
+resource "aws_route53_record" "kibana" {
+  zone_id = "${aws_route53_zone.internal_zone.zone_id}"
+  name    = "kibana.project8.local"
+  type    = "A"
+  ttl     = "300"
+  records = ["${module.monitoring-instance.ar_instance_ip_list}"]
+}
+
+resource "aws_route53_record" "prometheus" {
+  zone_id = "${aws_route53_zone.internal_zone.zone_id}"
+  name    = "prometheus.project8.local"
+  type    = "A"
+  ttl     = "300"
+  records = ["${module.monitoring-instance.ar_instance_ip_list}"]
+}
+
+resource "aws_route53_record" "grafana" {
+  zone_id = "${aws_route53_zone.internal_zone.zone_id}"
+  name    = "grafana.project8.local"
+  type    = "A"
+  ttl     = "300"
+  records = ["${module.monitoring-instance.ar_instance_ip_list}"]
 }

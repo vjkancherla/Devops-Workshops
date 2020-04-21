@@ -208,19 +208,23 @@ resource "aws_security_group_rule" "allow_all" {
   description = "allow all traffic within the SG"
 }
 
-resource "aws_route53_zone" "internal_zone" {
- name   = "wordpress.local"
- comment = "Hosted zone for WordPress"
-
- vpc {
-    vpc_id = "${data.aws_vpc.selected_vpc.id}"
-  }
+data "aws_route53_zone" "selected" {
+  name         = "project8.local"
+  private_zone = true
 }
 
 resource "aws_route53_record" "wordpress_mysql" {
-  zone_id = "${aws_route53_zone.internal_zone.zone_id}"
-  name    = "mysql.wordpress.local"
+  zone_id = "${data.aws_route53_zone.selected.zone_id}"
+  name    = "mysql.project8.local"
   type    = "A"
   ttl     = "300"
   records = ["${module.db-instance.ar_instance_ip_list}"]
+}
+
+resource "aws_route53_record" "wordpress_web" {
+  zone_id = "${data.aws_route53_zone.selected.zone_id}"
+  name    = "web.project8.local"
+  type    = "A"
+  ttl     = "300"
+  records = ["${module.web-instance.ar_instance_ip_list}"]
 }

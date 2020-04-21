@@ -44,8 +44,40 @@
             'web.listen-address': '0.0.0.0:9113'
             'log.level': 'info'
 
+    - role: elastic.beats
+      vars:
+        beats_version: 7.6.2
+        beat: filebeat
+        beat_conf:
+         # default conf, this will be overridden later on in additional-config.yml
+         filebeat:
+           inputs:
+             - type: log
+               enabled: true
+               paths:
+                 - /var/log/*.log
+
+    - role: elastic.beats
+      vars:
+        beats_version: 7.6.2
+        beat: metricbeat
+        # default conf, this will be overridden later on in additional-config.yml
+        beat_conf:
+         metricbeat:
+           setup:
+             ilm:
+               policy_file: /etc/filebeat/policies/my-default-metricbeat.json
+               overwrite: true
+
    tasks:
     - name: Install Python-Boto packages
       package:
         name: "python-boto"
         state: present
+
+    - name: Perform additional configuration tasks
+      include: tasks/additional-config.yml
+
+    handlers:
+      - name: My handlers
+        include: handlers/main.yml
