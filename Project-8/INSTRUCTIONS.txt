@@ -1,39 +1,92 @@
 Packer + Ansible + Terraform + Jenkins
-
 + Monitoring server (with Prometheus + Grafana and ElasticSearch + Kibana)
----------------------------------------------------
+-----------------------------------------------
 
-The below is configured using the Linux Academy tutorials:
-1. Elastic Stack Essentials
-2. DevOps monitoring Deep Dive
+In this project we will:
+1. create an AMI using PACKER, called monitoring-ami, with the following software:
+-- Prometheus [port 9090]
+-- Grafana [port 3000]
+-- ElasticSearch [port 9200]
+-- Kibana [port 5601]
+-- Filebeat
+-- Metricbeat
+-- Prometheus Node Exporter [port 9113]
+PACKER (Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Packer/monitoring) uses ANSIBLE (Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Ansible/monitoring) as the provisioner
+Note: all the above pieces of software will be listening on localhost
 
-A Monitoring AMI is created with -
-Prometheus [port 9090]
-Grafana [port 3000]
-ElasticSearch [port 9200 and 9300]
-Kibana [port 5601]
+2. create an EC2 instance, called monitoring-instance, (+ CLB), using the AMI from step-1, using TERRAFORM (Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Terraform/layers/monitoring).
+Also, along with the monitoring-instance, TF also create the following R53 resources:
+-- project8.local
+-- elasticsearch.project8.local
+-- grafana.project8.local
+-- kibana.project8.local
+-- prometheus.project8.local
+-- monitoring.project8.local
+all the above records point to the private IP of monitoring-instance
+
+3. run AWS SSM CLI command, against the monitoring-instance, to update the config files, of the below pieces
+of softwares, to use the R53 record-Sets
+-- Prometheus
+-- Grafana
+-- ElasticSearch
+-- Kibana
+-- Filebeat
+-- Metricbeat
+The AWS SSM CLI command will run a shell script on the monitoring-instance, which in-turn, downloads and
+runs an ansible playbook (Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Ansible/monitoring-standalone)
+
+NOTE::: the reason for the need of step-3 is that:
+Goal: we want all our monitoring software's endpoints to be resolved from the while AWS env,
+we will want to use R53 record sets
+==> in step-1, the AMI will be created with all the monitoring software config pointing to localhost.
+This is because, the very first time, the R53 record sets will not exist. So, if we were to try to
+configure the monitoring software's endpoints to use R53 record sets, Ansible play-book (privision-monitoring.yml)
+will fail, resulting in Packer aborting the AMI creation
+==> step-2 creates the R53 record sets and will associate the private-ip of the monitoring instance with
+the record sets
+==> now that we have the R53 record sets, we need to update the  monitoring softwares' config files to
+use the record sets, instead of localhost. We do this using SSM CLI 
+
+
+4. create an AMI using PACKER, called jenkins-ami. Again, PACKER (Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Packer/jenkins) uses ANSIBLE (Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/Ansible/jenkins) as the provisioner
+
+5. create an EC2 instance, called jenkins-instance, (+ CLB), using the AMI from step-4, using TERRAFORM
+
+=========================
+STEPS 1-5 are triggered by running the following shell script:
+
+Pk_An_Tf_Jk_Wp_Pr_Gr_Elk/entry-point/start.sh
+=========================
+
+POINTS-TO-REMEBER
+--
+
+Recommended Grafana dashboard for node_exporter is https://grafana.com/grafana/dashboards/405
 
 Once the monitoring AMI is deployed on EC2, it will receive/pull the following data/metrics:
 
-Prometheus data [Prometheus server will scrape data on this port]:
-Jenkins => node exporter on port 9113
-Monitoring [localhost] => node exporter on port 9100
-Web => Nginx exporter (in the form of a docker container) on port 9113
+Prometheus data [Prometheus server will scrape/pull data on these ports]:
+--
+Jenkins instance => node exporter on port 9113
+Monitoring instance => node exporter on port 9113
+--Note:use node_exporter dashboard https://grafana.com/grafana/dashboards/405
+Web instance => Nginx exporter (in the form of a docker container) on port 9113
 ---Note: Nginx metrics are first enabled in nginx.conf file
 ---Note: Import Grafana dashboard from https://github.com/nginxinc/nginx-prometheus-exporter/blob/master/grafana/dashboard.json
-MySQL = MysqlD exporter (in the form of a docker container) on port 9113
----Note: MySQLD metrics are first enabled. See roles/monitoring/main.yml
+MySQL instance = MysqlD exporter (in the form of a docker container) on port 9113
+---Note: MySQLD metrics are enabled inside Mysql, for the exporter to work. See roles/monitoring/main.yml
+
+**Prometheus on the Monitoring instance is using AWS Service discovery to identify instances listening on port 9113
+
 
 ElasticSearch data [data will be pushed to ES]:
+--
 On all instances (Jenkins + Monitoring + Web + MySQL)
 filebeat to push [sys/app logs]
 metricbeat to push [sys metrics]
 
 
-Note: Prometheus on the Monitoring instance is using AWS Service discovery to identify instances listening on port 9113
-
-
-Use the Proxy-plugin in Chrome to access the monitoring ELB whilst VPN'd in
+**Use the Proxy-plugin in Chrome to access the monitoring instance/ELB whilst VPN'd in
 
 
 1. Install Packer locally

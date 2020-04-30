@@ -3,6 +3,7 @@
         "region": "eu-west-1",
         "subnet_id": "subnet-0655ca5e0722c13ec",
         "vpc_id": "vpc-0c6ee31520a0b15fa",
+        "security_group_id": "sg-044710b074db295ea",
         "instance_type": "t2.medium",
         "ssh_proxy_host": "localhost",
         "ssh_proxy_port": "1337"
@@ -12,6 +13,12 @@
             "name": "Monitoring AMI build",
             "ami_name": "packer-monitoring-{{isotime | clean_resource_name}}",
             "ami_description": "Prometheus+Grafana+ElasticSearch Monitoring AMI",
+            "tags": {
+              "os_version": "Amazon Linux 2",
+              "release": "Latest",
+              "Name": "packer-monitoring-{{isotime | clean_resource_name}}",
+              "created_by": "vija0326"
+            },
             "communicator": "ssh",
             "instance_type": "{{user `instance_type`}}",
             "region": "{{user `region`}}",
@@ -25,9 +32,15 @@
               "owners": ["amazon"],
               "most_recent": true
             },
+            "run_tags": {
+              "Name": "vija0326-mon-packer-builder"
+            },
             "ssh_username": "ec2-user",
+            "ssh_keypair_name": "VijayKancherla",
+            "ssh_private_key_file": "/Users/vija0326/Downloads/VijayKancherla.pem.txt",
             "type": "amazon-ebs",
             "subnet_id": "{{user `subnet_id`}}",
+            "security_group_id": "{{user `security_group_id`}}",
             "vpc_id": "{{user `vpc_id`}}",
             "ssh_proxy_host": "{{user `ssh_proxy_host`}}",
             "ssh_proxy_port": "{{user `ssh_proxy_port`}}"

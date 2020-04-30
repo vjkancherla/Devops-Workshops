@@ -1,24 +1,24 @@
 ---
 
-- name: Copy elasticsearch config file
+- name: Copy custom elasticsearch config file
   template:
     src: elasticsearch.yml.j2
     dest: /etc/elasticsearch/elasticsearch.yml
   notify: restart elasticsearch
 
-- name: Copy Kibana config file
+- name: Copy custom Kibana config file
   template:
     src: kibana.yml.j2
     dest: /etc/kibana/kibana.yml
   notify: restart kibana
 
-- name: Copy Filebeat config file
+- name: Copy custom Filebeat config file
   template:
     src: filebeat.yml.j2
     dest: /etc/filebeat/filebeat.yml
   notify: restart filebeat
 
-- name: Copy Metricbeat config file
+- name: Copy custom Metricbeat config file
   template:
     src: metricbeat.yml.j2
     dest: /etc/metricbeat/metricbeat.yml
@@ -27,16 +27,38 @@
 #any queued up handlers would be processed immediately, instead of at the end of the Play
 - meta: flush_handlers
 
-- name: Wait for port 9200 to become open on the host, don't start checking for 10 seconds
+- name: Wait for ElasticSearch port 9200 to become open on the host, don't start checking for 20 seconds
   wait_for:
     host: "{{ ansible_default_ipv4.address }}"
     port: 9200
-    delay: 10
+    delay: 20
 
-- name: Run Filebeat 'setup' command
+- name: Wait for Kibana port 5601 to become open on the host, don't start checking for 20 seconds
+  wait_for:
+    host: "{{ ansible_default_ipv4.address }}"
+    port: 5601
+    delay: 20
+
+- name: Run Filebeat 'setup' command to pick up the new changes
   shell: "filebeat setup"
   notify: restart filebeat
 
-- name: Run Metricbeat 'setup' command
+- name: Run Metricbeat 'setup' command to pick up the new changes
   shell: "metricbeat setup"
   notify: restart metricbeat
+
+- name: Sanity-check ElasticSearch's health
+  uri:
+    url: "{{ elasticsearch_url }}/_cat/health"
+
+- name: Sanity-check Kibana's health
+  uri:
+    url: http://{{ kibana_host }}:{{ kibana_port }}/api/status
+
+- name: Sanity-check Prometheus's health
+  uri:
+    url: http://{{ ansible_default_ipv4.address }}:9090/metrics
+
+- name: Sanity-check Grafana's health
+  uri:
+    url: http://{{ ansible_default_ipv4.address }}:3000/api/health

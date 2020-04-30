@@ -3,6 +3,7 @@
         "region": "eu-west-1",
         "subnet_id": "subnet-0655ca5e0722c13ec",
         "vpc_id": "vpc-0c6ee31520a0b15fa",
+        "security_group_id": "sg-044710b074db295ea",
         "instance_type": "t2.medium",
         "ssh_proxy_host": "localhost",
         "ssh_proxy_port": "1337"
@@ -12,6 +13,12 @@
             "name": "Jenkins AMI build",
             "ami_name": "packer-jenkins-master-{{isotime | clean_resource_name}}",
             "ami_description": "Jenkins master AMI",
+            "tags": {
+              "os_version": "Amazon Linux 2",
+              "release": "Latest",
+              "Name": "packer-jenkins-master-{{isotime | clean_resource_name}}",
+              "created_by": "vija0326"
+            },
             "communicator": "ssh",
             "instance_type": "{{user `instance_type`}}",
             "region": "{{user `region`}}",
@@ -25,10 +32,14 @@
               "owners": ["amazon"],
               "most_recent": true
             },
+            "run_tags": {
+              "Name": "vija0326-jen-packer-builder"
+            },
             "ssh_username": "ec2-user",
             "type": "amazon-ebs",
             "subnet_id": "{{user `subnet_id`}}",
             "vpc_id": "{{user `vpc_id`}}",
+            "security_group_id": "{{user `security_group_id`}}",
             "ssh_proxy_host": "{{user `ssh_proxy_host`}}",
             "ssh_proxy_port": "{{user `ssh_proxy_port`}}"
         }

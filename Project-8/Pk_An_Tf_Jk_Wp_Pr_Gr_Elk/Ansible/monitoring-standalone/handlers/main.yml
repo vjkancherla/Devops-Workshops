@@ -3,7 +3,7 @@
 - name: restart elasticsearch
   shell: |
     service elasticsearch restart
-    while [ `curl -s -o /dev/null -w "%{http_code}" {{ elasticsearch_url }}` != 200 ]; do echo "waiting for ES to return HTTP200 code"; sleep 5; done
+    i=0; while [ `curl -s -o /dev/null -w "%{http_code}" {{ elasticsearch_url }}` != 200 ]; do echo "waiting for ES to return HTTP200 code. Will retry for 60 secs"; sleep 5; if [ ${i} -lt 12 ]; then i=$((i+1)); else exit 5; fi; done
 
 - name: restart kibana
   systemd:

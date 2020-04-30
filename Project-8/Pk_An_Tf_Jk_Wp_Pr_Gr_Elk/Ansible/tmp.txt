@@ -1,0 +1,9 @@
+COMMAND	23692223-4f38-40a5-b018-afcd3fc19cac	Perform additional monitoring config	0	0	AWS-RunShellScript0	1588173953.666	50	0			1588166753.666		Pending	Pending	1
+CLOUDWATCHOUTPUTCONFIG		False
+INSTANCEIDS	i-0a9b97950244b89e7
+NOTIFICATIONCONFIG
+COMMANDS	cd /tmp
+COMMANDS	aws s3 cp s3://vija0326-mybucket/ansible-code/monitoring.zip .
+COMMANDS	unzip monitoring.zip
+COMMANDS	cd monitoring-standalone
+COMMANDS	ansible-playbook additional-config.yml

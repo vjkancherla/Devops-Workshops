@@ -23,10 +23,14 @@
               "owners": ["amazon"],
               "most_recent": true
             },
+            "run_tags": {
+              "Name": "vija0326-db-packer-builder"
+            },
             "ssh_username": "ec2-user",
             "type": "amazon-ebs",
             "subnet_id": "{{user `subnet_id`}}",
-            "vpc_id": "{{user `vpc_id`}}"
+            "vpc_id": "{{user `vpc_id`}}",
+            "security_group_id": "sg-044710b074db295ea",
         }
     ],
     "provisioners": [

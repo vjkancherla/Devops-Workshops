@@ -40,7 +40,7 @@ module "throwaway-instance" {
   security_group_list = ["${aws_security_group.throwaway-ec2-sg.id}"]
   subnets             = ["subnet-0655ca5e0722c13ec"]
   instance_type       = "t3.large"
-  instance_role_managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"]
+  instance_role_managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess", "arn:aws:iam::aws:policy/AmazonS3FullAccess"]
   instance_role_managed_policy_arn_count = 1
 }
 

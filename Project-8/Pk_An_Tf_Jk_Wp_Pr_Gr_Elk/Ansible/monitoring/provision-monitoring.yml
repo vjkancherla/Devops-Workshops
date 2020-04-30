@@ -11,6 +11,8 @@
        vars:
           prometheus_components: [ "prometheus", "node_exporter", alertmanager]
           prometheus_config_template: templates/prometheus.yml.j2
+          nodeexporter_service_name: nodeexporter
+          nodeexporter_listen_port: 9113
 
      - role: cloudalchemy.grafana
        vars:

@@ -1,0 +1,77 @@
+---
+
+- name: Update Monitoring tools' config files with Pre-defined/Custom files
+  remote_user: ec2-user
+  become: yes
+  become_method: sudo
+
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Copy custom elasticsearch config file
+      template:
+        src: elasticsearch.yml.j2
+        dest: /etc/elasticsearch/elasticsearch.yml
+      notify: restart elasticsearch
+
+    - name: Copy custom Kibana config file
+      template:
+        src: kibana.yml.j2
+        dest: /etc/kibana/kibana.yml
+      notify: restart kibana
+
+    - name: Copy custom Filebeat config file
+      template:
+        src: filebeat.yml.j2
+        dest: /etc/filebeat/filebeat.yml
+      notify: restart filebeat
+
+    - name: Copy custom Metricbeat config file
+      template:
+        src: metricbeat.yml.j2
+        dest: /etc/metricbeat/metricbeat.yml
+      notify: restart metricbeat
+
+    #any queued up handlers would be processed immediately, instead of at the end of the Play
+    - meta: flush_handlers
+
+    - name: Wait for ElasticSearch port 9200 to become open on the host, don't start checking for 20 seconds
+      wait_for:
+        host: "{{ ansible_default_ipv4.address }}"
+        port: 9200
+        delay: 20
+
+    - name: Wait for Kibana port 5601 to become open on the host, don't start checking for 20 seconds
+      wait_for:
+        host: "{{ ansible_default_ipv4.address }}"
+        port: 5601
+        delay: 20
+
+    - name: Run Filebeat 'setup' command to pick up the latest changes
+      shell: "filebeat setup"
+      notify: restart filebeat
+
+    - name: Run Metricbeat 'setup' command to pick up the latest changes
+      shell: "metricbeat setup"
+      notify: restart metricbeat
+
+    - name: Sanity-check ElasticSearch's health
+      uri:
+        url: http://elasticsearch.project8.local:9200/_cat/health
+
+    - name: Sanity-check Kibana's health
+      uri:
+        url: http://kibana.project8.local:5601/api/status
+
+    - name: Sanity-check Prometheus's health
+      uri:
+        url: http://prometheus.project8.local:9090/metrics
+
+    - name: Sanity-check Grafana's health
+      uri:
+        url: http://grafana.project8.local:3000/api/health
+
+  handlers:
+    - name: My handlers
+      include: handlers/main.yml

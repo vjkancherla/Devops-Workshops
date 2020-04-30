@@ -4,6 +4,6 @@
 - src: lean_delivery.elasticsearch
 - src: lean_delivery.java
 - src: lean_delivery.kibana
-- src: elastic.beats,7.6.2
+- src: elastic.beats
 - src: robertdebock.epel
 - src: geerlingguy.ansible

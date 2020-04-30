@@ -41,96 +41,21 @@ data "aws_ami" "monitoring-ami" {
   owners = ["self"]
 }
 
-data "aws_iam_policy_document" "ec2_assume_role_policy_doc" {
-  statement {
-    actions = ["sts:AssumeRole"]
-    effect  = "Allow"
+module "monitoring-instance" {
+  source = "../../modules/aws-terraform-ec2_autorecovery-0.0.23/"
 
-    principals {
-      identifiers = ["ec2.amazonaws.com"]
-      type        = "Service"
-    }
-  }
-}
-
-resource "aws_iam_policy" "monitoring_instance_policy" {
-  name        = "monitoring-instance-policy"
-  path        = "/"
-  description = "Permissions required for running monitoring instance"
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "monitoringperms",
-      "Effect": "Allow",
-      "Action": [
-          "ec2:Describe*",
-          "s3:*",
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role" "ec2_instance_role" {
-
-  assume_role_policy = "${data.aws_iam_policy_document.ec2_assume_role_policy_doc.json}"
-  name               = "JenkinsInstanceRole"
-  path               = "/"
-}
-
-resource "aws_iam_instance_profile" "ec2_instance_role_instance_profile" {
-
-  name = "monitoring_instance_profile"
-  path = "/"
-  role = "${aws_iam_role.ec2_instance_role.name}"
-}
-
-resource "aws_iam_role_policy_attachment" "attach_core_ssm_policy" {
-
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  role       = "${aws_iam_role.ec2_instance_role.name}"
-}
-
-resource "aws_iam_role_policy_attachment" "attach_monitoring_policy" {
-
-  policy_arn = "${aws_iam_policy.monitoring_instance_policy.arn}"
-  role       = "${aws_iam_role.mec2_instance_role.name}"
-}
-
-resource "aws_instance" "monitoring-instance" {
-
-  ami                    = "${data.aws_ami.monitoring-ami.id}"
-  instance_type          = "t3.large"
-  subnet_id              = "subnet-09b3316783387f292"
-  iam_instance_profile   = "${aws_iam_instance_profile.instance_role_instance_profile.name}"
-  vpc_security_group_ids = ["${aws_security_group.monitoring-ec2-sg.id}"]
-  key_name               = "VijayKancherla"
-
-
-  root_block_device {
-    volume_type           = "gp2"
-    volume_size           = "60"
-    delete_on_termination = true
-  }
-
-  tags = "${merge(local.base_tags,
-                    map("Name", "vija0326-monitoring-Amz2"),
-                    map("app_tier", "monitoring"))}"
-
-  provisioner "remote-exec" {
-    command = <<EOT
-    cd /tmp
-    aws s3 cp s3://vija0326-mybucket/ansible-code/monitoring.zip .
-    unzip monitoring.zip
-    cd monitoring
-    ansible-playbook additional-config.yml
-EOT
-  }
+  image_id            = "${data.aws_ami.monitoring-ami.id}"
+  additional_tags     = "${merge(local.base_tags,
+                            map("Name", "vija0326-monitoring-Amz2-Master"),
+                            map("app_tier", "monitoring"))}"
+  key_pair            = "VijayKancherla"
+  ec2_os              = "amazon2"
+  resource_name       = "vija0326-monitoring-Amz2-Master"
+  security_group_list = ["${aws_security_group.monitoring-ec2-sg.id}"]
+  subnets             = ["subnet-09b3316783387f292"]
+  instance_type       = "t3.large"
+  instance_role_managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonS3FullAccess"]
+  instance_role_managed_policy_arn_count = 1
 }
 
 
@@ -140,7 +65,7 @@ module "clb" {
   # Required
   clb_name        = "vija0326-monitoring"
   security_groups = ["${aws_security_group.monitoring-clb-sg.id}"]
-  instances       = ["${aws_instance.monitoring-instance.id}"]
+  instances       = ["${module.monitoring-instance.ar_instance_id_list}"]
   instances_count = 1
   subnets         = ["subnet-0655ca5e0722c13ec", "subnet-0207deb52e016cefa"]
 
@@ -181,7 +106,7 @@ data "http" "myip" {
 resource "aws_security_group" "monitoring-clb-sg" {
   name        = "monitoring-clb-sg"
   description = "Allow monitoring inbound traffic"
-  vpc_id      = "vpc-0c6ee31520a0b15fa"
+  vpc_id      = "${data.aws_vpc.selected_vpc.id}"
 
   ingress {
     cidr_blocks = ["${chomp(data.http.myip.body)}/32", "134.213.178.10/32", "134.213.183.100/32"]
