@@ -50,11 +50,9 @@
 
     - name: Run Filebeat 'setup' command to pick up the latest changes
       shell: "filebeat setup"
-      notify: restart filebeat
 
     - name: Run Metricbeat 'setup' command to pick up the latest changes
       shell: "metricbeat setup"
-      notify: restart metricbeat
 
     - name: Sanity-check ElasticSearch's health
       uri:

@@ -30,3 +30,14 @@ core_update_level: true
 #MySQL Prometheus exporter
 mysql_prometheus_user: exporter
 mysql_prometheus_password: Changeme12345!
+
+#--ElasticSearch--
+es_host: elasticsearch.project8.local
+es_http_port: 9200
+
+#--Kibana--
+kibana_host: kibana.project8.local
+kibana_port: 5601
+
+#--Filebeat--
+os_syslog_path: "/var/log/*.log"

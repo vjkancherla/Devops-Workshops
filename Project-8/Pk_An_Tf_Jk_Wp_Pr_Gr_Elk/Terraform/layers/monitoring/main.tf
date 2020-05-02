@@ -54,7 +54,7 @@ module "monitoring-instance" {
   security_group_list = ["${aws_security_group.monitoring-ec2-sg.id}"]
   subnets             = ["subnet-09b3316783387f292"]
   instance_type       = "t3.large"
-  instance_role_managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonS3FullAccess"]
+  instance_role_managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess", "arn:aws:iam::aws:policy/AmazonS3FullAccess"]
   instance_role_managed_policy_arn_count = 1
 }
 
@@ -96,6 +96,18 @@ module "clb" {
       lb_port           = 3000
       lb_protocol       = "HTTP"
     },
+    {
+      instance_port     = 5601
+      instance_protocol = "HTTP"
+      lb_port           = 5601
+      lb_protocol       = "HTTP"
+    },
+    {
+      instance_port     = 9200
+      instance_protocol = "HTTP"
+      lb_port           = 9200
+      lb_protocol       = "HTTP"
+    },
   ]
 }
 
@@ -123,17 +135,24 @@ resource "aws_security_group" "monitoring-clb-sg" {
   }
 
   ingress {
-    cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
+    cidr_blocks = ["${chomp(data.http.myip.body)}/32", "134.213.178.10/32", "134.213.183.100/32"]
     from_port   = 9300
     protocol    = "tcp"
     to_port     = 9300
   }
 
   ingress {
-    cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
+    cidr_blocks = ["${chomp(data.http.myip.body)}/32", "134.213.178.10/32", "134.213.183.100/32"]
     from_port   = 9200
     protocol    = "tcp"
     to_port     = 9200
+  }
+
+  ingress {
+    cidr_blocks = ["${chomp(data.http.myip.body)}/32", "134.213.178.10/32", "134.213.183.100/32"]
+    from_port   = 5601
+    protocol    = "tcp"
+    to_port     = 5601
   }
 
   egress {

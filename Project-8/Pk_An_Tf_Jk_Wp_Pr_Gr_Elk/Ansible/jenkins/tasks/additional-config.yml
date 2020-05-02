@@ -14,8 +14,6 @@
 
 - name: Run Filebeat 'setup' command
   shell: "filebeat setup"
-  notify: restart filebeat
 
 - name: Run Metricbeat 'setup' command
   shell: "metricbeat setup"
-  notify: restart metricbeat

@@ -5,4 +5,4 @@
 - src: lean_delivery.java
 - src: andrewrothstein.packer
 - src: undergreen.prometheus-node-exporter
-- src: elastic.beats,7.6.2
+- src: elastic.beats

@@ -53,5 +53,32 @@
       until: metrics_page.status == 200
       retries: 10
       delay: 5
-
   when: "'Install MySql' in ansible_play_name"
+
+- name: Install Filebeats from RPM
+  yum:
+    name: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.6.2-x86_64.rpm
+    state: present
+
+- name: Install Metricbeats from RPM
+  yum:
+    name: https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.2-x86_64.rpm
+    state: present
+
+- name: Copy custom Filebeat config file
+  template:
+    src: filebeat.yml.j2
+    dest: /etc/filebeat/filebeat.yml
+  notify: restart filebeat
+
+- name: Copy custom Metricbeat config file
+  template:
+    src: metricbeat.yml.j2
+    dest: /etc/metricbeat/metricbeat.yml
+  notify: restart metricbeat
+
+- name: Run Filebeat 'setup' command to pick up the new changes
+  shell: "filebeat setup"
+
+- name: Run Metricbeat 'setup' command to pick up the new changes
+  shell: "metricbeat setup"
