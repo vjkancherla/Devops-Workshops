@@ -7,15 +7,23 @@
    hosts: all
 
    roles:
-     - role: lrk.prometheus
+     # - role: lrk.prometheus
+     #   vars:
+     #      prometheus_components: [ "prometheus", "node_exporter", alertmanager]
+     #      prometheus_version: 2.17.2
+     #      prometheus_config_template: templates/prometheus.yml.j2
+     #      alertmanager_version: 0.20.0
+     #      nodeexporter_version: 0.18.1
+     #      nodeexporter_service_name: nodeexporter
+     #      nodeexporter_listen_port: 9113
+
+     - role: cloudalchemy.prometheus
        vars:
-          prometheus_components: [ "prometheus", "node_exporter", alertmanager]
-          prometheus_version: 2.17.2
-          prometheus_config_template: templates/prometheus.yml.j2
-          alertmanager_version: 0.20.0
-          nodeexporter_version: 0.18.1
-          nodeexporter_service_name: nodeexporter
-          nodeexporter_listen_port: 9113
+         prometheus_config_file: templates/my_prometheus.yml.j2
+
+     - role: cloudalchemy.node-exporter
+       vars:
+         node_exporter_web_listen_address: "0.0.0.0:9113"
 
      - role: cloudalchemy.grafana
        vars:

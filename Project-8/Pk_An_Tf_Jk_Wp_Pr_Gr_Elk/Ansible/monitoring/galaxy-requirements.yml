@@ -1,5 +1,7 @@
 ---
-- src: lrk.prometheus
+#- src: lrk.prometheus
+- src: cloudalchemy.prometheus
+- src: cloudalchemy.node-exporter
 - src: cloudalchemy.grafana
 - src: lean_delivery.elasticsearch
 - src: lean_delivery.java

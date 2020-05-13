@@ -3,7 +3,7 @@
         "region": "eu-west-1",
         "subnet_id": "subnet-0655ca5e0722c13ec",
         "vpc_id": "vpc-0c6ee31520a0b15fa",
-        "security_group_id": "sg-044710b074db295ea",
+        "security_group_id": "sg-01c4e482083978a11",
         "instance_type": "t2.medium",
         "ssh_proxy_host": "localhost",
         "ssh_proxy_port": "1337"

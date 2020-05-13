@@ -58,6 +58,12 @@ module "monitoring-instance" {
   instance_role_managed_policy_arn_count = 1
 }
 
+resource "null_resource" "null_id" {
+  depends_on = ["module.monitoring-instance"]
+  provisioner "local-exec" {
+    command = "echo ${module.monitoring-instance.ar_instance_id_list[0]} > instance_id.txt"
+  }
+}
 
 module "clb" {
   source = "../../modules/aws-terraform-clb-0.0.7/"

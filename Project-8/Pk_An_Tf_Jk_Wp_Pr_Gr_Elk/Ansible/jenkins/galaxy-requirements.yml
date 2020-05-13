@@ -4,5 +4,5 @@
 - src: andrewrothstein.unarchive-deps
 - src: lean_delivery.java
 - src: andrewrothstein.packer
-- src: undergreen.prometheus-node-exporter
+- src: cloudalchemy.node-exporter
 - src: elastic.beats

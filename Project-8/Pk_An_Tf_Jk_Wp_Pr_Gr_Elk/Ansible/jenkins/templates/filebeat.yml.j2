@@ -28,12 +28,9 @@ filebeat.inputs:
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
     - "{{ os_syslog_path }}"
-    - "{{ elasticsearch_log_path }}"
+    - "{{ jenkins_log_path }}"
     - "{{ filebeat_log_path }}"
     - "{{ metricbeat_log_path }}"
-    - "{{ kibana_log_path }}"
-    - "{{ grafana_log_path }}"
-    - "{{ prometheus_log_path }}"
     #- c:\programdata\elasticsearch\logs\*
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are

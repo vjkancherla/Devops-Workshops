@@ -21,28 +21,9 @@
 
     - role: andrewrothstein.packer
 
-    - role: undergreen.prometheus-node-exporter
+    - role: cloudalchemy.node-exporter
       vars:
-        - prometheus_node_exporter_version: 0.18.1
-        - prometheus_node_exporter_enabled_collectors:
-            - conntrack
-            - cpu
-            - diskstats
-            - entropy
-            - filefd
-            - filesystem
-            - loadavg
-            - mdadm
-            - meminfo
-            - netdev
-            - netstat
-            - stat
-            - textfile
-            - time
-            - vmstat
-        - prometheus_node_exporter_config_flags:
-            'web.listen-address': '0.0.0.0:9113'
-            'log.level': 'info'
+        node_exporter_web_listen_address: "0.0.0.0:9113"
 
     - role: elastic.beats
       vars:
@@ -78,6 +59,6 @@
     - name: Perform additional configuration tasks
       include: tasks/additional-config.yml
 
-    handlers:
-      - name: My handlers
-        include: handlers/main.yml
+   handlers:
+    - name: My handlers
+      include: handlers/main.yml
